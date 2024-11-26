@@ -9,11 +9,11 @@ android {
 
     defaultConfig {
         applicationId = "com.fodouop_fodouop_nathan.smarthome"
+
         minSdk = 25
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.play.services.maps)
     implementation(libs.androidx.gridlayout)
@@ -55,4 +56,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("com.google.code.gson:gson:2.10.1") // Ajout de la  dépendance vers la bibliothèque Gson qui se chargera de parser ou de transformer des
+    // données en JSON
 }
