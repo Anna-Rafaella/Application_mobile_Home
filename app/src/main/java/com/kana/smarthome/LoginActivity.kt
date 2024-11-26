@@ -1,14 +1,14 @@
-package com.kapande_deng.mymobile_home_application
+package com.fodouop_fodouop_nathan.smarthome
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         print(tokenData)
         if (responseCode == 200 && tokenData != null) {
             // Démarrer l'activité HomeActivity
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, Home::class.java)
             intent.putExtra("TOKEN", tokenData["token"]) // Passer le token à l'activité suivante
             startActivity(intent)
             finish() // Terminer l'activité de connexion

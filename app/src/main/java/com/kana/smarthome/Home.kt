@@ -3,18 +3,18 @@ package com.fodouop_fodouop_nathan.smarthome
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.fodouop_fodouop_nathan.smarthome.databinding.ActivityMainBinding
+import com.fodouop_fodouop_nathan.smarthome.databinding.ActivityHomeBinding
 
 class Home : AppCompatActivity() {
 
     // Déclaration de la variable binding
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Initialiser le View Binding
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
 
         // Définir la vue de l'activité
         setContentView(binding.root)

@@ -1,4 +1,4 @@
-package com.kapande_deng.mymobile_home_application
+package com.fodouop_fodouop_nathan.smarthome
 
 import android.content.Intent
 import android.os.Bundle

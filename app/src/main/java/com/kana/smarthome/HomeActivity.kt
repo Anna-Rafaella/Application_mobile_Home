@@ -1,12 +1,11 @@
-package com.kapande_deng.mymobile_home_application
+package com.fodouop_fodouop_nathan.smarthome
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.kana.smarthome.R
 
 class HomeActivity : AppCompatActivity() {
 

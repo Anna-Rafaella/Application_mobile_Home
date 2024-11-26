@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
+import com.kana.smarthome.R
 
 class DevicesFragment : Fragment() {
 

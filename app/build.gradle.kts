@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.fodouop_fodouop_nathan.smarthome"
+    namespace = "com.kana.smarthome"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.fodouop_fodouop_nathan.smarthome"
+        applicationId = "com.kana.smarthome"
 
         minSdk = 25
         targetSdk = 35

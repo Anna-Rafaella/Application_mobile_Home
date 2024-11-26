@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 class RoutinesFragment : Fragment() {
 
     private var routines = ArrayList<RoutineData>()
-    private lateinit var routinesAdapter: ArrayAdapter<RoutineData>
+    private lateinit var routinesAdapter: RoutinesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,11 +23,7 @@ class RoutinesFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_routines, container, false)
 
         val listViewRoutines = rootView.findViewById<ListView>(R.id.listViewRoutines)
-        routinesAdapter = ArrayAdapter(
-            requireContext(),
-            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-            routines
-        )
+        routinesAdapter = RoutinesAdapter(requireContext(), routines)
         listViewRoutines.adapter = routinesAdapter
 
         val buttonUpdate = rootView.findViewById<Button>(R.id.btnUpdateRoutines)

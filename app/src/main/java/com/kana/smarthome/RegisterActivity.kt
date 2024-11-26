@@ -1,4 +1,4 @@
-package com.kapande_deng.mymobile_home_application
+package com.fodouop_fodouop_nathan.smarthome
 
 import android.os.Bundle
 import android.util.Log

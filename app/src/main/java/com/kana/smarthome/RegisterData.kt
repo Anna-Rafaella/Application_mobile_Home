@@ -1,4 +1,4 @@
-package com.kapande_deng.mymobile_home_application
+package com.fodouop_fodouop_nathan.smarthome
 
 data class RegisterData(
     val login: String,
