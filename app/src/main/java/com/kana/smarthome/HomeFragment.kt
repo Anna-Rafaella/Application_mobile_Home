@@ -1,20 +1,37 @@
-package com.fodouop_fodouop_nathan.smarthome
+package com.kana.smarthome
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ListView
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.fodouop_fodouop_nathan.smarthome.Api
+import com.fodouop_fodouop_nathan.smarthome.DeviceData
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-    private val houseId = 10 // Identifiant de la maison
-    private val token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJpYXQiOjE3MzIzODk0NTB9.GeiTuo8sbJbs8gCTLPxu6eBH7w5hvwsSYrNmL8EMDN4"
-    private var devices = ArrayList<DeviceData>()
+    private var houseId: Int? = null // Identifiant de la maison sélectionnée
+    private var token: String? = null // Le token sera récupéré dans onCreateView
+    private val devices = ArrayList<DeviceData>() // Liste des appareils chargés
+    private val house = ArrayList<HouseData>()
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var houseAdapter: HomeFragmentAdapter
 
+    private var users: ArrayList<UsersData> = ArrayList()
+    private lateinit var usersAdapter: HomeFragmentUsersAdapter
+
+    private val usersAccess: ArrayList<UsersAccessData> = ArrayList()
+    private lateinit var usersAccessAdapter: HomeFragmentUsersWithAccessAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,181 +40,208 @@ class HomeFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_home, container, false)
 
-        // Initialisation des SwitchCompat
-        val ampouleSwitch = rootView.findViewById<SwitchCompat>(R.id.home_switch_ampoule)
-        val fenetreSwitch = rootView.findViewById<SwitchCompat>(R.id.switchFenetre)
-        val garageSwitch = rootView.findViewById<SwitchCompat>(R.id.switchGarage)
-
-        if (ampouleSwitch != null) {
-            Log.d("HomeFragment", "Ampoule Switch found: $ampouleSwitch")
-        } else {
-            Log.e("HomeFragment", "Ampoule Switch not found!")
-        }
-        ampouleSwitch.setOnCheckedChangeListener { _, isChecked ->
-            Log.d("HomeFragment", "Ampoule Switch changed: ${isChecked}")
-            if (isChecked) {
-                sendGlobalCommandToAllDevices("Light", "TURN ON")
-            } else {
-                sendGlobalCommandToAllDevices("Light", "TURN OFF")
-            }
+        sharedPreferences = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        token = sharedPreferences.getString("TOKEN", null)
+        if (token.isNullOrEmpty()) {
+            Log.e("HomeFragment", "Aucun token trouvé dans SharedPreferences.")
         }
 
+        setupAdapters(rootView)
+        initSwitches(rootView)
 
-        fenetreSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            Log.d("HomeFragment", "Fenetre Switch changed: $isChecked")
-            if (isChecked) {
-                sendGlobalCommandToAllDevices("Shutter", "OPEN")
-            } else {
-                sendGlobalCommandToAllDevices("Shutter", "CLOSE")
-            }
+        loadHouse()
+        loadUsers()
+        loadUsersWithAccess()
+
+        rootView.findViewById<Button>(R.id.btnUsers)?.setOnClickListener {
+            sendUsersChoice(rootView)
         }
-
-        garageSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            Log.d("HomeFragment", "Garage Switch changed: $isChecked")
-            if (isChecked) {
-                sendGlobalCommandToAllDevices("GarageDoor", "OPEN")
-            } else {
-                sendGlobalCommandToAllDevices("GarageDoor", "CLOSE")
-            }
-        }
-
-        // Charger les appareils
-        loadDevices()
 
         return rootView
     }
 
+    private fun setupAdapters(rootView: View) {
+        houseAdapter = HomeFragmentAdapter(requireContext(), house)
+        rootView.findViewById<ListView>(R.id.list_house)?.adapter = houseAdapter
 
-    // Charger les appareils
-    private fun loadDevices() {
-        if (token.isNotEmpty()) {
-            Api().get<DeviceResponse>(
-                "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices",
-                { responseCode, responseBody ->
-                    handleDevicesResponse(responseCode, responseBody)
-                },
-                token
-            )
-        } else {
-            Log.e("HomeFragment", "Token d'authentification introuvable.")
+        usersAccessAdapter = HomeFragmentUsersWithAccessAdapter(requireContext(), usersAccess)
+        rootView.findViewById<ListView>(R.id.users_list_access)?.adapter = usersAccessAdapter
+
+        usersAdapter = HomeFragmentUsersAdapter(requireContext(), users)
+      rootView.findViewById<Spinner>(R.id.userchoice)?.adapter = usersAdapter
+   }
+
+    private fun sendUsersChoice(rootView: View) {
+        val spinUsers = rootView.findViewById<Spinner>(R.id.userchoice)
+        val selectedUser = spinUsers?.selectedItem as? UsersData
+
+        if (selectedUser == null || selectedUser.login.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Aucun utilisateur valide sélectionné !", Toast.LENGTH_SHORT).show()
+            return
         }
-    }
 
-    // Gérer la réponse des appareils
-    private fun handleDevicesResponse(responseCode: Int, responseBody: DeviceResponse?) {
-        Log.d("HomeFragment", "Response code: $responseCode and body: $responseBody")
-        if (responseCode == 200 && responseBody != null) {
-            // Effacer les appareils existants
-            devices.clear()
+        val choiceData = UsersLoginData(selectedUser.login)
+        Toast.makeText(requireContext(), "Vérification en cours...", Toast.LENGTH_SHORT).show()
 
-            // Ajouter les appareils à la liste générale
-            devices.addAll(responseBody.devices)
-
-            Log.d("HomeFragment", "Devices chargés : ${responseBody.devices.size}")
-        } else {
-            Log.e(
-                "HomeFragment",
-                "Erreur lors du chargement des appareils: code $responseCode ou données nulles"
-            )
-        }
-    }
-
-    // Méthode pour envoyer une commande globale à tous les appareils d'un type spécifique
-    private fun sendGlobalCommandToAllDevices(deviceType: String, command: String) {
-        Log.d(
-            "HomeFragment",
-            "Envoi de la commande '$command' pour le type d'appareil : $deviceType"
+        Api().post(
+            path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
+            data = choiceData,
+            onSuccess = ::userChoiceSuccess,
+            securityToken = token.orEmpty()
         )
+    }
 
-        // Filtrer les appareils en fonction du type
-        val filteredDevices = devices.filter { it.id.startsWith(deviceType) }
+    private fun userChoiceSuccess(responseCode: Int) {
+        requireActivity().runOnUiThread {
+            if (responseCode == 200) {
+                Toast.makeText(requireContext(), "Accès accordé !!", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack()
+            } else {
+                Toast.makeText(requireContext(), "Erreur lors de l'accord d'accès", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
-        // Envoyer la commande à chaque appareil filtré
-        filteredDevices.forEach { device ->
+    private fun loadUsers() {
+        Api().get("https://polyhome.lesmoulinsdudev.com/api/users", ::loadUsersSuccess)
+    }
+
+    private fun loadUsersSuccess(responseCode: Int, loadedUsers: List<UsersData>?) {
+        if (responseCode == 200 && loadedUsers != null) {
+            users.clear()
+            users.addAll(loadedUsers)
+            updateUsersList()
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs.")
+        }
+    }
+
+    private fun loadHouse() {
+        token?.let {
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    Api().get<List<HouseData>>(
+                        "https://polyhome.lesmoulinsdudev.com/api/houses",
+                        ::handleHouseResponse,
+                        it
+                    )
+                } catch (e: Exception) {
+                    Log.e("HomeFragment", "Erreur lors du chargement des maisons : ${e.message}")
+                }
+            }
+        } ?: Log.e("HomeFragment", "Token introuvable pour charger les maisons.")
+    }
+
+    private fun handleHouseResponse(responseCode: Int, loadedHouses: List<HouseData>?) {
+        if (responseCode == 200 && loadedHouses != null) {
+            house.clear()
+            house.addAll(loadedHouses)
+            updateHouseList()
+
+            if (houseId == null) {
+                houseId = loadedHouses.firstOrNull { it.owner }?.houseId
+                houseId?.let { saveHouseId(it) }
+            }
+
+            loadDevices()
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des maisons.")
+        }
+    }
+
+    private fun loadUsersWithAccess() {
+        token?.let {
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    Api().get<List<UsersAccessData>>(
+                        "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
+                        ::handleUsersWithAccessResponse,
+                        it
+                    )
+                } catch (e: Exception) {
+                    Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs avec accès : ${e.message}")
+                }
+            }
+        }
+    }
+
+    private fun handleUsersWithAccessResponse(responseCode: Int, loadedUsers: List<UsersAccessData>?) {
+        if (responseCode == 200 && loadedUsers != null) {
+            usersAccess.clear()
+            usersAccess.addAll(loadedUsers)
+            updateUsersWithAccess()
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs avec accès.")
+        }
+    }
+
+    private fun loadDevices() {
+        houseId?.let {
+            Api().get<DeviceResponse>(
+                "https://polyhome.lesmoulinsdudev.com/api/houses/$it/devices",
+                ::handleDevicesResponse,
+                token.orEmpty()
+            )
+        }
+    }
+
+    private fun handleDevicesResponse(responseCode: Int, responseBody: DeviceResponse?) {
+        if (responseCode == 200 && responseBody != null) {
+            devices.clear()
+            devices.addAll(responseBody.devices)
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des appareils.")
+        }
+    }
+
+    private fun initSwitches(rootView: View) {
+        rootView.findViewById<SwitchCompat>(R.id.home_switch_ampoule)?.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                sendGlobalCommandToAllDevices("Light", if (isChecked) "TURN ON" else "TURN OFF")
+            }
+        }
+
+        rootView.findViewById<SwitchCompat>(R.id.switchFenetre)?.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                sendGlobalCommandToAllDevices("Shutter", if (isChecked) "OPEN" else "CLOSE")
+            }
+        }
+
+        rootView.findViewById<SwitchCompat>(R.id.switchGarage)?.apply {
+            setOnCheckedChangeListener { _, isChecked ->
+                sendGlobalCommandToAllDevices("GarageDoor", if (isChecked) "OPEN" else "CLOSE")
+            }
+        }
+    }
+
+    private fun sendGlobalCommandToAllDevices(deviceType: String, command: String) {
+        devices.filter { it.id.startsWith(deviceType) }.forEach { device ->
             sendCommandToDevice(device.id, command)
         }
     }
 
-    // Méthode pour envoyer une commande à un appareil spécifique
     private fun sendCommandToDevice(deviceId: String, command: String) {
-        val url =
-            "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command"
-
-        // Préparer le corps de la requête
-        val requestBody = ResponseCommandData(command)
-
-        Log.d("HomeFragment", "Envoi de la commande '$command' à l'appareil $deviceId via $url")
-
         Api().post(
-            url,
-            requestBody,
-            { response ->
-                Log.d(
-                    "HomeFragment",
-                    "Commande envoyée avec succès à l'appareil $deviceId : $response"
-                )
-            },
-            token
+            "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",
+            ResponseCommandData(command),
+            { response -> Log.d("HomeFragment", "Commande envoyée avec succès à $deviceId : $response") },
+            token.orEmpty()
         )
     }
+
+    private fun saveHouseId(houseId: Int) {
+        sharedPreferences.edit().putInt("MyHouseId", houseId).apply()
+    }
+
+    private fun updateHouseList() {
+        houseAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateUsersList() {
+        usersAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateUsersWithAccess() {
+        usersAccessAdapter.notifyDataSetChanged()
+    }
 }
-
-
-/*
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-}*/

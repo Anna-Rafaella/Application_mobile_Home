@@ -41,6 +41,7 @@ android {
 
 dependencies {
 
+
     implementation(libs.gson)
     implementation (libs.androidx.coordinatorlayout)
     implementation(libs.androidx.core.ktx)
@@ -53,6 +54,9 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.androidx.gridlayout)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.ui.test.android)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.ui.tooling.preview.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

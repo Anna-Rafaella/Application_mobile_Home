@@ -1,7 +1,6 @@
-package com.fodouop_fodouop_nathan.smarthome
+package com.kana.smarthome
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,13 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import com.google.gson.Gson
-import com.kana.smarthome.R
+import com.fodouop_fodouop_nathan.smarthome.Api
+import com.fodouop_fodouop_nathan.smarthome.DeviceData
+
 
 class DevicesFragment : Fragment() {
 
     private var devices = ArrayList<DeviceData>()
     private lateinit var devicesAdapter: DevicesAdapter
+    private var token: String? = null
 
     // Sections des appareils
     private val rezDeChausseeDevices = ArrayList<DeviceData>()
@@ -25,7 +26,17 @@ class DevicesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_devices, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_device, container, false)
+
+        // Récupérer le token depuis SharedPreferences
+        val sharedPreferences = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        token = sharedPreferences.getString("TOKEN", null)  // Récupérer le token, null si non trouvé
+
+        if (token != null) {
+            Log.d("MyFragment", "Token récupéré : $token")
+        } else {
+            Log.e("MyFragment", "Aucun token trouvé.")
+        }
 
         val listViewDevices = rootView.findViewById<ListView>(R.id.devices_list)
         devicesAdapter = DevicesAdapter(requireContext(), devices)
@@ -36,15 +47,10 @@ class DevicesFragment : Fragment() {
         return rootView
     }
 
-    private fun getAuthToken(context: Context): String? {
-        val sharedPreferences: SharedPreferences =
-            context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("auth_token", null)
-    }
+
 
     private fun loadDevices() {
         val houseId = 10
-        val token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJpYXQiOjE3MzIzODk0NTB9.GeiTuo8sbJbs8gCTLPxu6eBH7w5hvwsSYrNmL8EMDN4"
 
 
         if (token != null) {
@@ -65,10 +71,9 @@ class DevicesFragment : Fragment() {
         if (responseCode == 200 && responseBody != null) {
             devices.clear()
             // Séparer les appareils en fonction de leur ID
-            categorizeDevices(responseBody.devices)
+            //categorizeDevices(responseBody.devices)
             // Ajouter les appareils à la liste générale
-            devices.addAll(rezDeChausseeDevices)
-            devices.addAll(niveauUnDevices)
+            devices.addAll(responseBody.devices)
 
             updateDevices()
             Log.d("DevicesFragment", "Devices chargés : ${responseBody.devices}")

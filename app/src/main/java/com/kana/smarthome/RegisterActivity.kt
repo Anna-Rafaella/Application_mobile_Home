@@ -1,4 +1,4 @@
-package com.fodouop_fodouop_nathan.smarthome
+package com.kana.smarthome
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.fodouop_fodouop_nathan.smarthome.Api
 
 class RegisterActivity : AppCompatActivity() {
 

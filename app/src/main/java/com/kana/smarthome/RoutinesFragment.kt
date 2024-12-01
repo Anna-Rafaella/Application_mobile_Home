@@ -1,14 +1,14 @@
-package com.fodouop_fodouop_nathan.smarthome
+package com.kana.smarthome
 
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.Fragment
+import com.fodouop_fodouop_nathan.smarthome.Api
 
 
 class RoutinesFragment : Fragment() {

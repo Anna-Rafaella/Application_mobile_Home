@@ -1,4 +1,5 @@
-package com.fodouop_fodouop_nathan.smarthome
+
+package com.kana.smarthome
 
 import android.content.Context
 import android.util.Log
@@ -8,8 +9,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
+import com.fodouop_fodouop_nathan.smarthome.Api
+import com.fodouop_fodouop_nathan.smarthome.DeviceData
 
-class DevicesAdapter(private val context: Context, private val dataSource: ArrayList<DeviceData>) : BaseAdapter() {
+
+class DevicesAdapter(private val context: Context, private val dataSource: List<DeviceData>) : BaseAdapter() {
+    private var token: String? = null
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -21,7 +26,7 @@ class DevicesAdapter(private val context: Context, private val dataSource: Array
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        val rowView = convertView ?: inflater.inflate(R.layout.item_device, parent, false)
+        val rowView = convertView ?: inflater.inflate(R.layout.item_devices, parent, false)
         val device = getItem(position) as DeviceData
 
         val deviceName = rowView.findViewById<TextView>(R.id.device_name)
@@ -30,12 +35,22 @@ class DevicesAdapter(private val context: Context, private val dataSource: Array
         val actionButton3 = rowView.findViewById<Button>(R.id.action_button_3)
 
 
+        // Récupérer le token depuis SharedPreferences
+        val sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        token = sharedPreferences.getString("TOKEN", null)  // Récupérer le token, null si non trouvé
+
+        if (token != null) {
+            Log.d("MyFragment", "Token récupéré : $token")
+        } else {
+            Log.e("MyFragment", "Aucun token trouvé.")
+        }
+
         // Initialisation du nom de l'appareil
         deviceName.text = device.id
 
         // Configuration des boutons en fonction du type de périphérique
         when {
-            device.id.startsWith("Light") || device.id.startsWith("Shutter") || device.id.startsWith("GarageDoor") -> {
+             device.id.startsWith("Shutter") || device.id.startsWith("GarageDoor") -> {
                 actionButton1.text = "Ouvrir"
                 actionButton2.text = "Stop"
                 actionButton3.text = "Fermer"
@@ -43,6 +58,15 @@ class DevicesAdapter(private val context: Context, private val dataSource: Array
                 actionButton1.setOnClickListener { sendCommand(device.id, "OPEN") }
                 actionButton2.setOnClickListener { sendCommand(device.id, "STOP") }
                 actionButton3.setOnClickListener { sendCommand(device.id, "CLOSE") }
+            }
+            device.id.startsWith("Light") -> {
+                actionButton1.text = "Allumer"
+                actionButton2.text = "aucune action"
+                actionButton3.text = "Eteindre"
+                actionButton2.visibility = View.GONE
+                actionButton1.setOnClickListener { sendCommand(device.id, "TURN ON") }
+                actionButton2.setOnClickListener { sendCommand(device.id, " ") }
+                actionButton3.setOnClickListener { sendCommand(device.id, "TURN OFF") }
             }
             else -> {
                 actionButton1.visibility = View.GONE

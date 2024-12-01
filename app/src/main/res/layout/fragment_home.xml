@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/background"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -12,11 +13,13 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,7 +162,6 @@
                             android:id="@+id/home_switch_ampoule"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="true"
                             android:minWidth="48dp"
                             android:minHeight="48dp"
                             android:padding="10dp"
@@ -222,7 +224,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:checked="true"
                             android:minWidth="48dp"
                             android:minHeight="48dp"
                             android:padding="10dp"
@@ -284,7 +285,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:checked="true"
                             android:minWidth="48dp"
                             android:minHeight="48dp"
                             android:padding="10dp"
@@ -345,7 +345,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:checked="true"
                             android:minWidth="48dp"
                             android:minHeight="48dp"
                             android:padding="10dp"
@@ -385,207 +384,105 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:text="Room"
+                android:text="Maisons"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:baselineAligned="false"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <!-- Première rangée -->
-                <LinearLayout
+                <ListView
+                    android:id="@+id/list_house"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:layout_margin="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:divider="@android:color/darker_gray"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <!-- Chambre à coucher -->
+
+            <TextView
+                android:id="@+id/accessuser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="Donner des accès"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/chambre_coucher"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.5">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        <ImageView
-                            android:id="@+id/imageView_chambre"
-                            android:layout_width="112dp"
-                            android:layout_height="110dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
+                        <Spinner
+                            android:id="@+id/userchoice"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/btnUsers"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_bedroom" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/textView_chambre_titre"
+                        <Button
+                            android:id="@+id/btnUsers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Chambre à coucher"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/imageView_chambre"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/imageView_chambre"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView_chambre" />
+                            android:layout_marginStart="5dp"
+                            android:text="Accorder"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/userchoice"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/textView_chambre_appareils"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="5 appareils"
-                            android:textStyle="italic"
-                            app:layout_constraintEnd_toEndOf="@+id/textView_chambre_titre"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/textView_chambre_titre"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_chambre_titre" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <!-- Bureau -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/bureau"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.5">
 
-                        <ImageView
-                            android:id="@+id/imageView_bureau"
-                            android:layout_width="112dp"
-                            android:layout_height="110dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_work" />
-
-                        <TextView
-                            android:id="@+id/textView_bureau_titre"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Bureau"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/imageView_bureau"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/imageView_bureau"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView_bureau" />
-
-                        <TextView
-                            android:id="@+id/textView_bureau_appareils"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="4 appareils"
-                            android:textStyle="italic"
-                            app:layout_constraintEnd_toEndOf="@+id/textView_bureau_titre"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/textView_bureau_titre"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_bureau_titre" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
-                <!-- Deuxième rangée -->
-                <LinearLayout
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <ListView
+                    android:id="@+id/users_list_access"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <!-- Cuisine -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cuisine"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.5">
-
-                        <ImageView
-                            android:id="@+id/imageView_cuisine"
-                            android:layout_width="112dp"
-                            android:layout_height="110dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/kitchen_image" />
-
-                        <TextView
-                            android:id="@+id/textView_cuisine_titre"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Cuisine"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/imageView_cuisine"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/imageView_cuisine"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView_cuisine" />
-
-                        <TextView
-                            android:id="@+id/textView_cuisine_appareils"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="4 appareils"
-                            android:textStyle="italic"
-                            app:layout_constraintEnd_toEndOf="@+id/textView_cuisine_titre"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/textView_cuisine_titre"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_cuisine_titre" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <!-- Salon -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/salon"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.5">
-
-                        <ImageView
-                            android:id="@+id/imageView_salon"
-                            android:layout_width="112dp"
-                            android:layout_height="110dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/living_room_image" />
-
-                        <TextView
-                            android:id="@+id/textView_salon_titre"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Salon"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/imageView_salon"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/imageView_salon"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView_salon" />
-
-                        <TextView
-                            android:id="@+id/textView_salon_appareils"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="5 appareils"
-                            android:textStyle="italic"
-                            app:layout_constraintEnd_toEndOf="@+id/textView_salon_titre"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/textView_salon_titre"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_salon_titre" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
-            </LinearLayout>
-
+                    android:layout_margin="20dp"
+                    android:divider="@android:color/darker_gray"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

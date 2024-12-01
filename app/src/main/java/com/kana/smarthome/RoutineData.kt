@@ -1,4 +1,4 @@
-package com.fodouop_fodouop_nathan.smarthome
+package com.kana.smarthome
 
 data class RoutineData(
     val id: String,

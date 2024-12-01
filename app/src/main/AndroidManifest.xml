@@ -16,16 +16,16 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".Home"
+            android:name="com.kana.smarthome.Home"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.kana.smarthome.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.kana.smarthome.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.kana.smarthome.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
