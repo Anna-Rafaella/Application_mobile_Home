@@ -9,8 +9,16 @@
         android:id="@+id/recyclerViewDevices"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" /> <!-- Utilisation de layout_weight pour que le RecyclerView prenne toute la place restante -->
+        android:layout_weight="1" />
 
+    <Button
+        android:id="@+id/backbtn"
+        android:layout_width="224dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="50dp"
+        android:text="Retour a la liste des pièces" />
 
 
 </LinearLayout>

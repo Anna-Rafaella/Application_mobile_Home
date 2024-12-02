@@ -177,6 +177,7 @@ class HomeFragment : Fragment() {
 
             // Ajout uniquement des utilisateurs avec owner == 0 soit n'etant pas proprietaire et ayant uniquement été ajouté
             val filteredUsers = loadedUsers.filter { it.owner.toInt() == 0 }
+            houseId?.let { saveHouseId(it) }
             usersAccess.addAll(filteredUsers)
             updateUsersWithAccess()
         } else {
@@ -209,7 +210,7 @@ class HomeFragment : Fragment() {
         requireActivity().runOnUiThread {
             if (responseCode == 200) {
                 Toast.makeText(requireContext(), "Accès accordé !!", Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.popBackStack()
+                loadHouse()
             } else {
                 Toast.makeText(requireContext(), "Erreur lors de l'accord d'accès", Toast.LENGTH_SHORT).show()
             }
@@ -257,6 +258,7 @@ class HomeFragment : Fragment() {
         }
 
     }
+
 }
 
 

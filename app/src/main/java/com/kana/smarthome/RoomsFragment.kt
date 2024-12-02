@@ -82,7 +82,7 @@ class RoomsFragment : Fragment(R.layout.fragment_rooms) {
                 putParcelable("room", room)
             }
 
-            // Appel la méthode replaceFragment de l'activité parent
+            // Appel de la méthode replaceFragment de l'activité parent
             (requireActivity() as? Home)?.replaceFragment(DeviceFragmentRoom().apply {
                 arguments = bundle
             })
