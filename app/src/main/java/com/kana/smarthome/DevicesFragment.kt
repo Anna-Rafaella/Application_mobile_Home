@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import com.fodouop_fodouop_nathan.smarthome.Api
-import com.fodouop_fodouop_nathan.smarthome.DeviceData
 
 
 class DevicesFragment : Fragment() {

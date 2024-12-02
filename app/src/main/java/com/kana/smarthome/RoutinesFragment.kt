@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.Fragment
-import com.fodouop_fodouop_nathan.smarthome.Api
 
 
 class RoutinesFragment : Fragment() {

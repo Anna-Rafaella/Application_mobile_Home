@@ -1,6 +1,5 @@
 package com.kana.smarthome
 
-import DeviceRoom
 import android.os.Parcel
 import android.os.Parcelable
 

@@ -60,7 +60,8 @@
             android:paddingLeft="5dp"
             android:paddingTop="10dp"
             android:paddingRight="5dp"
-            android:paddingBottom="10dp" />
+            android:paddingBottom="10dp"
+            android:text="nate2" />
 
         <EditText
             android:id="@+id/txtPassword"
@@ -73,7 +74,8 @@
             android:paddingLeft="5dp"
             android:paddingTop="10dp"
             android:paddingRight="5dp"
-            android:paddingBottom="10dp" />
+            android:paddingBottom="10dp"
+            android:text="nate2" />
 
         <Button
             android:id="@+id/btnConnect"

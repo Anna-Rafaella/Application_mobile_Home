@@ -1,3 +1,5 @@
+package com.kana.smarthome
+
 import android.os.Parcel
 import android.os.Parcelable
 

@@ -11,8 +11,6 @@ import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import com.fodouop_fodouop_nathan.smarthome.Api
-
 
 class LoginActivity : AppCompatActivity() {
 
@@ -32,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
     private fun storeAuthToken(context: Context, token: String?) {
         if (!token.isNullOrEmpty()) {
             val sharedPreferences: SharedPreferences =
@@ -48,14 +47,14 @@ class LoginActivity : AppCompatActivity() {
 
     // Cette méthode sera appelée après une connexion réussie.
     // Elle doit gérer le code de réponse et le token renvoyé par le serveur.
-    private fun loginSuccess(responseCode: Int, tokenData:Map<String,String>?) {
-        Log.d("login","dans la page : ${tokenData.toString()}")
+    private fun loginSuccess(responseCode: Int, tokenData: Map<String, String>?) {
+        Log.d("login", "dans la page : ${tokenData.toString()}")
 
 
         if (responseCode == 200 && tokenData != null) {
             val token = tokenData["token"]
 
-            storeAuthToken(this,token)
+            storeAuthToken(this, token)
 
             // Démarrer l'activité HomeActivity
             val intent = Intent(this, Home::class.java)
@@ -83,16 +82,20 @@ class LoginActivity : AppCompatActivity() {
             val loginData = LoginData(login, password)
 
             // Appeler l'API pour se connecter
-            Api().post<LoginData, Map<String,String>>("https://polyhome.lesmoulinsdudev.com/api/users/auth",loginData,::loginSuccess)
+            Api().post<LoginData, Map<String, String>>(
+                "https://polyhome.lesmoulinsdudev.com/api/users/auth",
+                loginData,
+                ::loginSuccess
+            )
         } else {
             Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show()
         }
     }
 
-    public fun registerNewAccount(view: View)
-    {
+    public fun registerNewAccount(view: View) {
         val intent = Intent(this, RegisterActivity::class.java);
         startActivity(intent);
     }
+
 
 }

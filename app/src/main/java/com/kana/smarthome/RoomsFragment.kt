@@ -1,6 +1,5 @@
 package com.kana.smarthome
 
-import DeviceRoom
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -83,7 +82,7 @@ class RoomsFragment : Fragment(R.layout.fragment_rooms) {
                 putParcelable("room", room)
             }
 
-            // Appeler la méthode replaceFragment de l'activité parent
+            // Appel la méthode replaceFragment de l'activité parent
             (requireActivity() as? Home)?.replaceFragment(DeviceFragmentRoom().apply {
                 arguments = bundle
             })

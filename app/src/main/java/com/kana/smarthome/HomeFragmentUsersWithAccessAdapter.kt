@@ -1,7 +1,6 @@
 package com.kana.smarthome
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.fodouop_fodouop_nathan.smarthome.Api
 
 class HomeFragmentUsersWithAccessAdapter(
     private val context: Context,
     private val dataSource: List<UsersAccessData>
 ) : BaseAdapter() {
-    private lateinit var sharedPreferences: SharedPreferences // Préférences partagées
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -32,12 +29,10 @@ class HomeFragmentUsersWithAccessAdapter(
         token = sharedPreferences.getString("TOKEN", null)
     }
 
-    // Filtrer les utilisateurs ayant owner == 0
-    private val filteredDataSource = dataSource.filter { it.owner == 0 }
 
-    override fun getCount(): Int = filteredDataSource.size
+    override fun getCount(): Int = dataSource.size
 
-    override fun getItem(position: Int): Any = filteredDataSource[position]
+    override fun getItem(position: Int): Any = dataSource[position]
 
     override fun getItemId(position: Int): Long = position.toLong()
 
@@ -46,13 +41,13 @@ class HomeFragmentUsersWithAccessAdapter(
 
         val user = getItem(position) as UsersAccessData
 
-        Log.d("Adapter", "Affichage des utilisateurs : ${user.userLogin}")
+        Log.d("Adapter", "Affichage des utilisateurs ayant l'accès : ${user.userLogin}")
 
         // Initialiser les vues depuis le XML
         val usersaccessTextView = rowView.findViewById<TextView>(R.id.UsersWithAccess)
 
         // Afficher le login de l'utilisateur
-        usersaccessTextView.text = user.userLogin ?: "Utilisateur inconnu"
+        usersaccessTextView.text = user.userLogin
 
         // Connecter le bouton Supprimer l'accès
         val sendButtonRemoveAccess = rowView.findViewById<Button>(R.id.RemoveAccess)
@@ -96,11 +91,11 @@ class HomeFragmentUsersWithAccessAdapter(
         Toast.makeText(context, "Suppression en cours...", Toast.LENGTH_SHORT).show()
 
         // Appel de l'API avec gestion sécurisée du token
-        Api().post(
+        Api().delete(
             path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
-            data = choiceData,
+             data = choiceData,
             onSuccess = ::removeUserChoiceSuccess,
-            securityToken = token ?: "" // Fournit un token par défaut vide si null
+            securityToken = token ?: ""
         )
     }
 }

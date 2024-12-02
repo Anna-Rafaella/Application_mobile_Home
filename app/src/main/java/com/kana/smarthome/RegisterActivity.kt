@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.fodouop_fodouop_nathan.smarthome.Api
 
 class RegisterActivity : AppCompatActivity() {
 

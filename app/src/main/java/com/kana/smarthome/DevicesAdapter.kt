@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
-import com.fodouop_fodouop_nathan.smarthome.Api
-import com.fodouop_fodouop_nathan.smarthome.DeviceData
 
 
 class DevicesAdapter(private val context: Context, private val dataSource: List<DeviceData>) : BaseAdapter() {

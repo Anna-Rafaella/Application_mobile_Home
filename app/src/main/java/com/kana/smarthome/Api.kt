@@ -1,4 +1,4 @@
-package com.fodouop_fodouop_nathan.smarthome
+package com.kana.smarthome
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -36,6 +36,11 @@ class Api {
         request<Unit>(path, "DELETE", onSuccess, null, securityToken);
     }
 
+    public inline fun<reified K> delete(path: String, data: K, crossinline onSuccess: (Int) -> Unit, securityToken: String? = null)
+    {
+        request<K>(path, "DELETE", onSuccess, data, securityToken);
+    }
+
     inline fun <reified T, reified K>request(
         path: String,
         method: String,
@@ -54,6 +59,7 @@ class Api {
             else
             {
                 println(responseCode);
+                onSuccess(responseCode, null);
             }
         }
     }

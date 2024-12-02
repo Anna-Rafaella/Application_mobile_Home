@@ -14,8 +14,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.fodouop_fodouop_nathan.smarthome.Api
-import com.fodouop_fodouop_nathan.smarthome.DeviceData
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -50,8 +48,7 @@ class HomeFragment : Fragment() {
         initSwitches(rootView)
 
         loadHouse()
-        loadUsers()
-        loadUsersWithAccess()
+
 
         rootView.findViewById<Button>(R.id.btnUsers)?.setOnClickListener {
             sendUsersChoice(rootView)
@@ -70,130 +67,6 @@ class HomeFragment : Fragment() {
         usersAdapter = HomeFragmentUsersAdapter(requireContext(), users)
       rootView.findViewById<Spinner>(R.id.userchoice)?.adapter = usersAdapter
    }
-
-    private fun sendUsersChoice(rootView: View) {
-        val spinUsers = rootView.findViewById<Spinner>(R.id.userchoice)
-        val selectedUser = spinUsers?.selectedItem as? UsersData
-
-        if (selectedUser == null || selectedUser.login.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "Aucun utilisateur valide sélectionné !", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val choiceData = UsersLoginData(selectedUser.login)
-        Toast.makeText(requireContext(), "Vérification en cours...", Toast.LENGTH_SHORT).show()
-
-        Api().post(
-            path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
-            data = choiceData,
-            onSuccess = ::userChoiceSuccess,
-            securityToken = token.orEmpty()
-        )
-    }
-
-    private fun userChoiceSuccess(responseCode: Int) {
-        requireActivity().runOnUiThread {
-            if (responseCode == 200) {
-                Toast.makeText(requireContext(), "Accès accordé !!", Toast.LENGTH_SHORT).show()
-                requireActivity().supportFragmentManager.popBackStack()
-            } else {
-                Toast.makeText(requireContext(), "Erreur lors de l'accord d'accès", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun loadUsers() {
-        Api().get("https://polyhome.lesmoulinsdudev.com/api/users", ::loadUsersSuccess)
-    }
-
-    private fun loadUsersSuccess(responseCode: Int, loadedUsers: List<UsersData>?) {
-        if (responseCode == 200 && loadedUsers != null) {
-            users.clear()
-            users.addAll(loadedUsers)
-            updateUsersList()
-        } else {
-            Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs.")
-        }
-    }
-
-    private fun loadHouse() {
-        token?.let {
-            viewLifecycleOwner.lifecycleScope.launch {
-                try {
-                    Api().get<List<HouseData>>(
-                        "https://polyhome.lesmoulinsdudev.com/api/houses",
-                        ::handleHouseResponse,
-                        it
-                    )
-                } catch (e: Exception) {
-                    Log.e("HomeFragment", "Erreur lors du chargement des maisons : ${e.message}")
-                }
-            }
-        } ?: Log.e("HomeFragment", "Token introuvable pour charger les maisons.")
-    }
-
-    private fun handleHouseResponse(responseCode: Int, loadedHouses: List<HouseData>?) {
-        if (responseCode == 200 && loadedHouses != null) {
-            house.clear()
-            house.addAll(loadedHouses)
-            updateHouseList()
-
-            if (houseId == null) {
-                houseId = loadedHouses.firstOrNull { it.owner }?.houseId
-                houseId?.let { saveHouseId(it) }
-            }
-
-            loadDevices()
-        } else {
-            Log.e("HomeFragment", "Erreur lors du chargement des maisons.")
-        }
-    }
-
-    private fun loadUsersWithAccess() {
-        token?.let {
-            viewLifecycleOwner.lifecycleScope.launch {
-                try {
-                    Api().get<List<UsersAccessData>>(
-                        "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
-                        ::handleUsersWithAccessResponse,
-                        it
-                    )
-                } catch (e: Exception) {
-                    Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs avec accès : ${e.message}")
-                }
-            }
-        }
-    }
-
-    private fun handleUsersWithAccessResponse(responseCode: Int, loadedUsers: List<UsersAccessData>?) {
-        if (responseCode == 200 && loadedUsers != null) {
-            usersAccess.clear()
-            usersAccess.addAll(loadedUsers)
-            updateUsersWithAccess()
-        } else {
-            Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs avec accès.")
-        }
-    }
-
-    private fun loadDevices() {
-        houseId?.let {
-            Api().get<DeviceResponse>(
-                "https://polyhome.lesmoulinsdudev.com/api/houses/$it/devices",
-                ::handleDevicesResponse,
-                token.orEmpty()
-            )
-        }
-    }
-
-    private fun handleDevicesResponse(responseCode: Int, responseBody: DeviceResponse?) {
-        if (responseCode == 200 && responseBody != null) {
-            devices.clear()
-            devices.addAll(responseBody.devices)
-        } else {
-            Log.e("HomeFragment", "Erreur lors du chargement des appareils.")
-        }
-    }
-
     private fun initSwitches(rootView: View) {
         rootView.findViewById<SwitchCompat>(R.id.home_switch_ampoule)?.apply {
             setOnCheckedChangeListener { _, isChecked ->
@@ -214,12 +87,141 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+    private fun loadHouse() {
+        token?.let {
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    Api().get<List<HouseData>>(
+                        "https://polyhome.lesmoulinsdudev.com/api/houses",
+                        ::handleHouseResponse,
+                        it
+                    )
+                } catch (e: Exception) {
+                    Log.e("HomeFragment", "Erreur lors du chargement des maisons : ${e.message}")
+                }
+            }
+        } ?: Log.e("HomeFragment", "Token introuvable pour charger les maisons.")
+    }
+    private fun handleHouseResponse(responseCode: Int, loadedHouses: List<HouseData>?) {
+        if (responseCode == 200 && loadedHouses != null) {
+            house.clear()
+            house.addAll(loadedHouses)
+            updateHouseList()
+
+            if (houseId == null) {
+                houseId = loadedHouses.firstOrNull { it.owner }?.houseId
+                houseId?.let { saveHouseId(it) }
+            }
+
+            loadDevices()
+            loadUsers()
+            loadUsersWithAccess()
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des maisons.")
+        }
+    }
+
+    private fun loadDevices() {
+        houseId?.let {
+            Api().get<DeviceResponse>(
+                "https://polyhome.lesmoulinsdudev.com/api/houses/$it/devices",
+                ::handleDevicesResponse,
+                token.orEmpty()
+            )
+        }
+    }
+    private fun handleDevicesResponse(responseCode: Int, responseBody: DeviceResponse?) {
+        if (responseCode == 200 && responseBody != null) {
+            devices.clear()
+            devices.addAll(responseBody.devices)
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des appareils.")
+        }
+    }
+
+
+    private fun loadUsers() {
+        Api().get("https://polyhome.lesmoulinsdudev.com/api/users", ::loadUsersSuccess)
+    }
+    private fun loadUsersSuccess(responseCode: Int, loadedUsers: List<UsersData>?) {
+        if (responseCode == 200 && loadedUsers != null) {
+            users.clear()
+            users.addAll(loadedUsers)
+            updateUsersList()
+
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs.")
+        }
+    }
+
+
+    private fun loadUsersWithAccess() {
+        token?.let {
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    Api().get<List<UsersAccessData>>(
+                        "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
+                        ::handleUsersWithAccessResponse,
+                        it
+                    )
+                } catch (e: Exception) {
+                    Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs avec accès : ${e.message}")
+                }
+            }
+        }
+    }
+    private fun handleUsersWithAccessResponse(responseCode: Int, loadedUsers: List<UsersAccessData>?) {
+        if (responseCode == 200 && loadedUsers != null) {
+            usersAccess.clear()
+
+            // Ajout uniquement des utilisateurs avec owner == 0 soit n'etant pas proprietaire et ayant uniquement été ajouté
+            val filteredUsers = loadedUsers.filter { it.owner.toInt() == 0 }
+            usersAccess.addAll(filteredUsers)
+            updateUsersWithAccess()
+        } else {
+            Log.e("HomeFragment", "Erreur lors du chargement des utilisateurs avec accès.")
+        }
+    }
+
+
+
+    private fun sendUsersChoice(rootView: View) {
+        val spinUsers = rootView.findViewById<Spinner>(R.id.userchoice)
+        val selectedUser = spinUsers?.selectedItem as? UsersData
+
+        if (selectedUser == null || selectedUser.login.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Aucun utilisateur valide sélectionné !", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val choiceData = UsersLoginData(selectedUser.login)
+        Toast.makeText(requireContext(), "Vérification en cours...", Toast.LENGTH_SHORT).show()
+
+        Api().post(
+            path = "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/users",
+            data = choiceData,
+            onSuccess = ::userChoiceSuccess,
+            securityToken = token.orEmpty()
+        )
+    }
+    private fun userChoiceSuccess(responseCode: Int) {
+        requireActivity().runOnUiThread {
+            if (responseCode == 200) {
+                Toast.makeText(requireContext(), "Accès accordé !!", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack()
+            } else {
+                Toast.makeText(requireContext(), "Erreur lors de l'accord d'accès", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
     private fun sendGlobalCommandToAllDevices(deviceType: String, command: String) {
         devices.filter { it.id.startsWith(deviceType) }.forEach { device ->
             sendCommandToDevice(device.id, command)
         }
     }
-
     private fun sendCommandToDevice(deviceId: String, command: String) {
         Api().post(
             "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",
@@ -229,19 +231,32 @@ class HomeFragment : Fragment() {
         )
     }
 
+
+
     private fun saveHouseId(houseId: Int) {
         sharedPreferences.edit().putInt("MyHouseId", houseId).apply()
     }
 
     private fun updateHouseList() {
-        houseAdapter.notifyDataSetChanged()
+        requireActivity().runOnUiThread{
+            houseAdapter.notifyDataSetChanged()
+        }
+
     }
 
     private fun updateUsersList() {
-        usersAdapter.notifyDataSetChanged()
+        requireActivity().runOnUiThread{
+            usersAdapter.notifyDataSetChanged()
+        }
+
     }
 
     private fun updateUsersWithAccess() {
-        usersAccessAdapter.notifyDataSetChanged()
+        requireActivity().runOnUiThread{
+            usersAccessAdapter.notifyDataSetChanged()
+        }
+
     }
 }
+
+

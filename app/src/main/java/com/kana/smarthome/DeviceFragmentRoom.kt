@@ -18,10 +18,7 @@ class DeviceFragmentRoom : Fragment(R.layout.fragment_devices) {
         room = arguments?.getParcelable("room")
 
         room?.let {
-            val adapter = DeviceAdapterRoom(it.devices,requireContext()){
-                // Callback pour le bouton Back
-                activity?.supportFragmentManager?.popBackStack() // Retourne à la page Room
-            }
+            val adapter = DeviceAdapterRoom(it.devices,requireContext())
 
             binding.recyclerViewDevices.layoutManager = LinearLayoutManager(context)
             binding.recyclerViewDevices.adapter = adapter

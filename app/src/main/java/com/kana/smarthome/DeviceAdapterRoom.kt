@@ -1,18 +1,15 @@
 package com.kana.smarthome
 
-import DeviceRoom
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.fodouop_fodouop_nathan.smarthome.Api
 import com.kana.smarthome.databinding.ItemDevicesBinding
 
 class DeviceAdapterRoom(private val devices: List<DeviceRoom>,
                         private val context: Context,
-                        private val onBackClick: () -> Unit // Ajoutez un callback pour le bouton Back
     ) : RecyclerView.Adapter<DeviceAdapterRoom.DeviceViewHolder>() {
 
     private var token: String? = null
@@ -29,8 +26,8 @@ class DeviceAdapterRoom(private val devices: List<DeviceRoom>,
     }
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-        //val device = devices[position]
-        holder.bind(devices[position], onBackClick)
+        val device = devices[position]
+        holder.bind(device)
     }
 
     override fun getItemCount(): Int = devices.size
@@ -42,11 +39,8 @@ class DeviceAdapterRoom(private val devices: List<DeviceRoom>,
 
 
 
-        fun bind(device: DeviceRoom , onBackClick: () -> Unit) {
-            // Gérer le clic sur le bouton Back
-            binding.buttonBack.setOnClickListener {
-                onBackClick()
-            }
+        fun bind(device: DeviceRoom ) {
+
             binding.deviceName.text = device.id
             binding.actionButton1.text =device.power.toString()
             binding.actionButton2.text = device.opening.toString()
