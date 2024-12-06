@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">My Mobile_Home_Application</string>
+    <string name="app_name">SmartHome</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_rooms">Rooms</string>
+    <string name="nav_devices">Devices</string>
+    <string name="nav_settings">Settings</string>
+    <string name="drawer_profile">Profile</string>
+    <string name="drawer_settings">Settings</string>
+    <string name="drawer_logout">Logout</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="room_icon">Room Icon</string>
+    <string name="device_icon">Device Icon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

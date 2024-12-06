@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Mobile_Home_Application"
+rootProject.name = "SmartHome"
 include(":app")
  

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="mobile app">
+      <SelectionState runConfigName="Smart">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
