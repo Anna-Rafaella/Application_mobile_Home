@@ -30,7 +30,7 @@ class RoutinesFragment : Fragment() {
             loadRoutines()
         }
 
-        loadRoutines()
+        //loadRoutines()
         return rootView
     }
 
@@ -51,12 +51,7 @@ class RoutinesFragment : Fragment() {
         activity?.runOnUiThread {
             routinesAdapter.notifyDataSetChanged()
         }
-//        // Méthode pour gérer le clic sur "Ajouter une routine"
-//        fun onAddRoutineClicked(view: View) {
-//            // Exemple : Naviguer vers une nouvelle activité ou afficher un dialogue
-//            val intent = Intent(activity, AddRoutineActivity::class.java)
-//            startActivity(intent)
-//        }
-    }
 
+
+    }
 }

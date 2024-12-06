@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +154,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.75">
 
                     <!-- Bloc pour Ampoule -->
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,7 +207,10 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- Répétition des blocs pour Climatiseur, Garage et Fenêtre -->
+
+                <!-- Répétition pour Climatiseur -->
+
+                <!-- Répéter pour Garage -->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
@@ -215,69 +218,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
-
-                    <!-- Bloc pour Climatiseur -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout_climatiseur"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/ic_light_climatiseur"
-                            android:layout_width="68dp"
-                            android:layout_height="66dp"
-                            android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_climatiseur" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/switch_climatiseur"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@+id/ic_light_climatiseur"
-                            app:layout_constraintStart_toStartOf="@+id/ic_light_climatiseur"
-                            app:layout_constraintTop_toBottomOf="@+id/ic_light_climatiseur" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/constraintLayout_climatiseur"
-                        app:layout_constraintStart_toStartOf="@id/constraintLayout_climatiseur"
-                        app:layout_constraintTop_toBottomOf="@id/constraintLayout_climatiseur">
-
-                        <TextView
-                            android:id="@+id/text_climatiseur"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Clim"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- Répéter pour Garage et Fenêtre avec des IDs et des drawables spécifiques -->
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.75">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayoutGarage"
@@ -331,13 +272,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <!-- des blocs pour  Fenêtre -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.75">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayoutFenetre"
@@ -392,6 +334,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
             </LinearLayout>
 
             <TextView
@@ -410,7 +353,7 @@
 
                 <ListView
                     android:id="@+id/list_house"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_marginBottom="16dp"
@@ -431,7 +374,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:text="Donner des accès"
+                android:text="Gérer les accès"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -458,6 +401,7 @@
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
+                            android:layout_marginBottom="16dp"
                             android:background="@color/white"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
@@ -488,10 +432,11 @@
 
                 <ListView
                     android:id="@+id/users_list_access"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="16dp"
                     android:divider="@android:color/darker_gray"
                     android:dividerHeight="1dp"
                     android:scrollbars="vertical"

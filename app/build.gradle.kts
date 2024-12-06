@@ -61,5 +61,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.google.code.gson:gson:2.10.1") // Ajout de la  dépendance vers la bibliothèque Gson qui se chargera de parser ou de transformer des
-    // données en JSON
+    implementation ("com.airbnb.android:lottie:5.2.0")
+
 }

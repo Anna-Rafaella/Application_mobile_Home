@@ -58,11 +58,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupAdapters(rootView: View) {
+        // Configurer les adaptateurs
         houseAdapter = HomeFragmentAdapter(requireContext(), house)
-        rootView.findViewById<ListView>(R.id.list_house)?.adapter = houseAdapter
+        val houseListView = rootView.findViewById<ListView>(R.id.list_house)
+        houseListView?.adapter = houseAdapter
+        setListViewHeightBasedOnChildren(houseListView) // Ajuster la hauteur dynamiquement
 
         usersAccessAdapter = HomeFragmentUsersWithAccessAdapter(requireContext(), usersAccess)
-        rootView.findViewById<ListView>(R.id.users_list_access)?.adapter = usersAccessAdapter
+        val usersAccessListView = rootView.findViewById<ListView>(R.id.users_list_access)
+        usersAccessListView?.adapter = usersAccessAdapter
+        setListViewHeightBasedOnChildren(usersAccessListView) // Ajuster la hauteur dynamiquement
 
         usersAdapter = HomeFragmentUsersAdapter(requireContext(), users)
       rootView.findViewById<Spinner>(R.id.userchoice)?.adapter = usersAdapter
@@ -223,6 +228,7 @@ class HomeFragment : Fragment() {
             sendCommandToDevice(device.id, command)
         }
     }
+
     private fun sendCommandToDevice(deviceId: String, command: String) {
         Api().post(
             "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",
@@ -241,6 +247,10 @@ class HomeFragment : Fragment() {
     private fun updateHouseList() {
         requireActivity().runOnUiThread{
             houseAdapter.notifyDataSetChanged()
+            // Recalculer la hauteur après la mise à jour
+            view?.findViewById<ListView>(R.id.list_house)?.let {
+                setListViewHeightBasedOnChildren(it)
+            }
         }
 
     }
@@ -248,6 +258,11 @@ class HomeFragment : Fragment() {
     private fun updateUsersList() {
         requireActivity().runOnUiThread{
             usersAdapter.notifyDataSetChanged()
+
+            // Recalculer la hauteur après la mise à jour
+            view?.findViewById<ListView>(R.id.users_list_access)?.let {
+                setListViewHeightBasedOnChildren(it)
+            }
         }
 
     }
@@ -257,6 +272,32 @@ class HomeFragment : Fragment() {
             usersAccessAdapter.notifyDataSetChanged()
         }
 
+    }
+
+
+    //Gerer la hauteur des listview pour s'adapter au contenu
+    private fun setListViewHeightBasedOnChildren(listView: ListView) {
+        val listAdapter = listView.adapter ?: return
+
+        var totalHeight = 0
+        for (i in 0 until listAdapter.count) {
+            val listItem = listAdapter.getView(i, null, listView)
+            listItem.measure(
+                View.MeasureSpec.makeMeasureSpec(listView.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.UNSPECIFIED
+            )
+            totalHeight += listItem.measuredHeight
+        }
+
+        // Ajouter la hauteur des diviseurs
+        val dividerHeight = listView.dividerHeight * (listAdapter.count - 1)
+        totalHeight += dividerHeight
+
+        // Appliquer la hauteur calculée
+        val params = listView.layoutParams
+        params.height = totalHeight
+        listView.layoutParams = params
+        listView.requestLayout()
     }
 
 }

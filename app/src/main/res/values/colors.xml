@@ -20,4 +20,14 @@
     <color name="background">#C3AEA4</color>
 
     <color name="material_dynamic_primary60">#3F51B5</color>
+
+    <!-- Couleurs principales -->
+    <color name="primaryColor">#6200EE</color> <!-- Violet (Material Design) -->
+    <color name="primaryColorLight">#BB86FC</color> <!-- Violet clair -->
+    <color name="gray">#BDBDBD</color> <!-- Gris -->
+
+    <!-- Couleurs pour des styles modernes -->
+    <color name="neonYellow">#FFD700</color> <!-- Jaune néon -->
+    <color name="neonGreen">#39FF14</color> <!-- Vert néon -->
+    <color name="darkGray">#212121</color> <!-- Gris foncé -->
 </resources>
