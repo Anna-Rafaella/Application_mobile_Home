@@ -100,9 +100,9 @@
             android:id="@+id/tvOpeningTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Heure d'ouverture"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnSelectOpeningTime"
@@ -114,19 +114,19 @@
             android:id="@+id/tvSelectedOpeningTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Heure sélectionnée : Non définie"
-            android:textSize="14sp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:text="Heure sélectionnée : Non définie"
+            android:textSize="14sp" />
 
         <!-- Sélection de l'heure de fermeture -->
         <TextView
             android:id="@+id/tvClosingTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Heure de fermeture"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnSelectClosingTime"
@@ -138,29 +138,45 @@
             android:id="@+id/tvSelectedClosingTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Heure sélectionnée : Non définie"
-            android:textSize="14sp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:text="Heure sélectionnée : Non définie"
+            android:textSize="14sp" />
 
         <!-- Bouton pour sauvegarder -->
         <Button
             android:id="@+id/btnSaveSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enregistrer les horaires"
             android:backgroundTint="@color/primary"
+            android:text="Enregistrer les horaires"
             android:textColor="@color/white" />
+
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnUpdateRoutines"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Ajouter une routine"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/ivHelp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:src="@drawable/help"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

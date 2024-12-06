@@ -18,6 +18,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import java.util.Calendar
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
@@ -66,6 +67,11 @@ class RoutinesFragment : Fragment() {
             }
         }
 
+        // Ajouter un écouteur sur l'icône d'aide
+        rootView.findViewById<ImageView>(R.id.ivHelp).setOnClickListener {
+            showInstructionDialog()
+        }
+
         rootView.findViewById<Button>(R.id.btnSelectClosingTime).setOnClickListener {
             showTimePicker { hour, minute ->
                 closingHour = hour
@@ -96,6 +102,20 @@ class RoutinesFragment : Fragment() {
 
         return rootView
     }
+
+    private fun showInstructionDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Instructions")
+        builder.setMessage(
+            "Configurez les horaires pour définir le mode jour et le mode nuit.\n\n" +
+                    "- Le mode jour s'active automatiquement à l'heure d'ouverture.\n" +
+                    "- Le mode nuit s'active automatiquement à l'heure de fermeture.\n" +
+                    "- Utilisez les boutons ci-dessous pour enregistrer vos préférences."
+        )
+        builder.setPositiveButton("Compris") { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
+    }
+
 
     private fun setupDayModeSwitch(daySwitch: SwitchCompat) {
         daySwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -146,7 +166,7 @@ class RoutinesFragment : Fragment() {
                 }
 
                 // Vérification toutes les 60 secondes
-                handler.postDelayed(this, 60000)
+                handler.postDelayed(this, 10000)
             }
         })
     }
