@@ -43,7 +43,7 @@ class Home : AppCompatActivity() {
     }
 
     // Méthode pour remplacer les fragments
-     fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout, fragment)

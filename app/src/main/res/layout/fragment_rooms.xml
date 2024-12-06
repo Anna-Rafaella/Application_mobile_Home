@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    &lt;!&ndash; Toolbar (action bar) &ndash;&gt;-->
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:title="Smart Home"-->
-<!--        android:paddingStart="16dp"-->
-<!--        android:paddingEnd="16dp"-->
-<!--        android:background="?attr/colorPrimary" />  &lt;!&ndash; Optionnel : pour changer la couleur de fond &ndash;&gt;-->
+    <!--    &lt;!&ndash; Toolbar (action bar) &ndash;&gt;-->
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:id="@+id/toolbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:title="Smart Home"-->
+    <!--        android:paddingStart="16dp"-->
+    <!--        android:paddingEnd="16dp"-->
+    <!--        android:background="?attr/colorPrimary" />  &lt;!&ndash; Optionnel : pour changer la couleur de fond &ndash;&gt;-->
 
     <!-- Title Text -->
 

@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 
 class HomeFragmentUsersWithAccessAdapter(
-private val context: Context,
-private var dataSource: MutableList<UsersAccessData> // Utiliser une liste mutable pour pouvoir modifier les données
+    private val context: Context,
+    private var dataSource: MutableList<UsersAccessData> // Utiliser une liste mutable pour pouvoir modifier les données
 ) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
@@ -100,4 +101,7 @@ private var dataSource: MutableList<UsersAccessData> // Utiliser une liste mutab
             securityToken = token ?: ""
         )
     }
+
+
+
 }

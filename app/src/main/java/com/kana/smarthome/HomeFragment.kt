@@ -70,8 +70,8 @@ class HomeFragment : Fragment() {
         setListViewHeightBasedOnChildren(usersAccessListView) // Ajuster la hauteur dynamiquement
 
         usersAdapter = HomeFragmentUsersAdapter(requireContext(), users)
-      rootView.findViewById<Spinner>(R.id.userchoice)?.adapter = usersAdapter
-   }
+        rootView.findViewById<Spinner>(R.id.userchoice)?.adapter = usersAdapter
+    }
     private fun initSwitches(rootView: View) {
         rootView.findViewById<SwitchCompat>(R.id.home_switch_ampoule)?.apply {
             setOnCheckedChangeListener { _, isChecked ->
@@ -258,11 +258,6 @@ class HomeFragment : Fragment() {
     private fun updateUsersList() {
         requireActivity().runOnUiThread{
             usersAdapter.notifyDataSetChanged()
-
-            // Recalculer la hauteur après la mise à jour
-            view?.findViewById<ListView>(R.id.users_list_access)?.let {
-                setListViewHeightBasedOnChildren(it)
-            }
         }
 
     }
@@ -270,6 +265,11 @@ class HomeFragment : Fragment() {
     private fun updateUsersWithAccess() {
         requireActivity().runOnUiThread{
             usersAccessAdapter.notifyDataSetChanged()
+
+            // Recalculer la hauteur après la mise à jour
+            view?.findViewById<ListView>(R.id.users_list_access)?.let {
+                setListViewHeightBasedOnChildren(it)
+            }
         }
 
     }
