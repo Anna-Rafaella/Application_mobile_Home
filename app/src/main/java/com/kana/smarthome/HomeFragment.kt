@@ -12,14 +12,16 @@ import android.widget.ListView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
 
     private var houseId: Int? = null // Identifiant de la maison sélectionnée
     private var token: String? = null // Le token sera récupéré dans onCreateView
+    private var isOwner: Boolean? = null
     private val devices = ArrayList<DeviceData>() // Liste des appareils chargés
     private val house = ArrayList<HouseData>()
     private lateinit var sharedPreferences: SharedPreferences
@@ -44,6 +46,13 @@ class HomeFragment : Fragment() {
             Log.e("HomeFragment", "Aucun token trouvé dans SharedPreferences.")
         }
 
+        houseId = sharedPreferences.getInt("houseId",0)
+        if (houseId == 0) {
+            Log.e("HomeFragment", "Aucun identifiant de maison trouvé dans SharedPreferences.")
+        }
+
+        isOwner = sharedPreferences.getBoolean("isOwner",false)
+
         setupAdapters(rootView)
         initSwitches(rootView)
 
@@ -54,12 +63,35 @@ class HomeFragment : Fragment() {
             sendUsersChoice(rootView)
         }
 
+
         return rootView
     }
 
+
+    companion object {
+        private const val TAG = "HomeFragment"
+    }
+
+
+
+    override fun onHouseSelected(houseId: Int) {
+
+        if (this.houseId != houseId) {
+            requireActivity().runOnUiThread {
+                val activity = requireActivity()
+                val intent = activity.intent
+                activity.finish()
+                startActivity(intent)
+
+            }
+        }
+    }
+
+
+
     private fun setupAdapters(rootView: View) {
         // Configurer les adaptateurs
-        houseAdapter = HomeFragmentAdapter(requireContext(), house)
+        houseAdapter = HomeFragmentAdapter(requireContext(), house,this)
         val houseListView = rootView.findViewById<ListView>(R.id.list_house)
         houseListView?.adapter = houseAdapter
         setListViewHeightBasedOnChildren(houseListView) // Ajuster la hauteur dynamiquement
@@ -71,6 +103,20 @@ class HomeFragment : Fragment() {
 
         usersAdapter = HomeFragmentUsersAdapter(requireContext(), users)
         rootView.findViewById<Spinner>(R.id.userchoice)?.adapter = usersAdapter
+
+        val accesBlock = rootView.findViewById<ConstraintLayout>(R.id.Accessblock)
+
+        // Sécuriser l'accès à la gestion d'access
+        accesBlock?.let {
+            // Vérifier si l'utilisateur est le propriétaire de la maison sélectionnée
+            if (isOwner == true) {
+                // Si la maison sélectionnée est celle de l'utilisateur, afficher le bloc
+                it.visibility = View.VISIBLE
+            } else {
+                // Sinon, masquer le bloc
+                it.visibility = View.GONE
+            }
+        }
     }
     private fun initSwitches(rootView: View) {
         rootView.findViewById<SwitchCompat>(R.id.home_switch_ampoule)?.apply {
@@ -113,11 +159,6 @@ class HomeFragment : Fragment() {
             house.clear()
             house.addAll(loadedHouses)
             updateHouseList()
-
-            if (houseId == null) {
-                houseId = loadedHouses.firstOrNull { it.owner }?.houseId
-                houseId?.let { saveHouseId(it) }
-            }
 
             loadDevices()
             loadUsers()
@@ -181,7 +222,16 @@ class HomeFragment : Fragment() {
             usersAccess.clear()
 
             // Ajout uniquement des utilisateurs avec owner == 0 soit n'etant pas proprietaire et ayant uniquement été ajouté
-            val filteredUsers = loadedUsers.filter { it.owner.toInt() == 0 }
+            //val filteredUsers = loadedUsers.filter { it.owner.toInt() == 0 }
+            val filteredUsers = loadedUsers.filter {
+                try {
+                    it.owner.toInt() == 0
+                } catch (e: NumberFormatException) {
+                    Log.e(TAG, "Erreur de conversion de l'attribut owner : ${e.message}")
+                    false
+                }
+            }
+
             houseId?.let { saveHouseId(it) }
             usersAccess.addAll(filteredUsers)
             updateUsersWithAccess()
@@ -197,7 +247,7 @@ class HomeFragment : Fragment() {
         val selectedUser = spinUsers?.selectedItem as? UsersData
 
         if (selectedUser == null || selectedUser.login.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "Aucun utilisateur valide sélectionné !", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Utilisateur invalide sélectionné !", Toast.LENGTH_SHORT).show()
             return
         }
 
