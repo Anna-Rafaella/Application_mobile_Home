@@ -52,6 +52,13 @@ class RoutinesFragment : Fragment() {
         if (token.isNullOrEmpty()) {
             Log.e("HomeFragment", "Aucun token trouvé dans SharedPreferences.")
         }
+
+
+        houseId = sharedPreferences.getInt("houseId",0)
+        if (houseId == 0) {
+            Log.e("HomeFragment", "Aucun identifiant de maison trouvé dans SharedPreferences.")
+        }
+
         // Initialisation des vues
         tvSelectedOpeningTime = rootView.findViewById(R.id.tvSelectedOpeningTime)
         tvSelectedClosingTime = rootView.findViewById(R.id.tvSelectedClosingTime)
@@ -208,20 +215,13 @@ class RoutinesFragment : Fragment() {
             house.clear()
             house.addAll(loadedHouses)
 
-            if (houseId == null) {
-                houseId = loadedHouses.firstOrNull { it.owner }?.houseId
-                houseId?.let { saveHouseId(it) }
-            }
-
             loadDevices()
         } else {
             Log.e("HomeFragment", "Erreur lors du chargement des maisons.")
         }
     }
 
-    private fun saveHouseId(houseId: Int) {
-        sharedPreferences.edit().putInt("MyHouseId", houseId).apply()
-    }
+
 
     private fun loadDevices() {
         houseId?.let {

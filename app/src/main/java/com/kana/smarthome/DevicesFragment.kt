@@ -15,6 +15,7 @@ class DevicesFragment : Fragment() {
     private var devices = ArrayList<DeviceData>()
     private lateinit var devicesAdapter: DevicesAdapter
     private var token: String? = null
+    private var houseId: Int? = null
 
     // Sections des appareils
     private val rezDeChausseeDevices = ArrayList<DeviceData>()
@@ -36,6 +37,10 @@ class DevicesFragment : Fragment() {
             Log.e("MyFragment", "Aucun token trouvé.")
         }
 
+        houseId = sharedPreferences.getInt("houseId",0)
+        if (houseId == 0) {
+            Log.e("HomeFragment", "Aucun identifiant de maison trouvé dans SharedPreferences.")
+        }
         val listViewDevices = rootView.findViewById<ListView>(R.id.devices_list)
         devicesAdapter = DevicesAdapter(requireContext(), devices)
         listViewDevices.adapter = devicesAdapter
@@ -48,7 +53,7 @@ class DevicesFragment : Fragment() {
 
 
     private fun loadDevices() {
-        val houseId = 10
+
 
 
         if (token != null) {
