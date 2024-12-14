@@ -11,8 +11,6 @@ import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -70,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
 
             // Démarrer l'activité HomeActivity
             val intent = Intent(this, Home::class.java)
-            //intent.putExtra("TOKEN", token) // Passer le token à l'activité suivante
             startActivity(intent)
             finish() // Terminer l'activité de connexion
 
@@ -100,6 +97,7 @@ class LoginActivity : AppCompatActivity() {
                     saveHouseId(this,it)
                     saveStatusOwner(this,true)
                 }
+            saveUserName(this)
         } else {
             Log.e("HomeFragment", "Erreur lors du chargement des maisons.")
         }
@@ -133,12 +131,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveStatusOwner(context: Context, isOwner: Boolean) {
+
             val sharedPreferences: SharedPreferences =
                 context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putBoolean("isOwner", isOwner)
             editor.apply() // Enregistrer les modifications
             Log.d("HomeFragment", "Token enregistré avec succès")
+    }
+    private fun saveUserName(context: Context) {
+        val userName = findViewById<EditText>(R.id.txtname).text.toString()
+        val sharedPreferences: SharedPreferences =
+            context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("UserName", userName)
+        editor.apply() // Enregistrer les modifications
+        Log.d("HomeFragment", "Token enregistré avec succès")
     }
 
     public fun registerNewAccount(view: View) {

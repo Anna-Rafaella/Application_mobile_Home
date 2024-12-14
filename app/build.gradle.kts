@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.ui.tooling.preview.android)
+
+    implementation(libs.play.services.location)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

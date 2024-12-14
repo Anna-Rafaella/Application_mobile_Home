@@ -117,7 +117,8 @@ class RoutinesFragment : Fragment() {
             "Configurez les horaires pour définir le mode jour et le mode nuit.\n\n" +
                     "- Le mode jour s'active automatiquement à l'heure d'ouverture.\n" +
                     "- Le mode nuit s'active automatiquement à l'heure de fermeture.\n" +
-                    "- Utilisez les boutons ci-dessous pour enregistrer vos préférences."
+                    "- Utilisez les boutons ci-dessous pour enregistrer vos préférences.\n\n"+
+                    "A vous de jouer !! "
         )
         builder.setPositiveButton("Compris") { dialog, _ -> dialog.dismiss() }
         builder.create().show()

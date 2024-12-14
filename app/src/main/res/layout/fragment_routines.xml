@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bottom_nav_icon_color">
+    android:layout_height="match_parent">
 
     <!-- Titre -->
     <TextView
@@ -19,9 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Liste des routines -->
 
-    <!-- Bouton pour ajouter une routine -->
+
 
     <TextView
         android:id="@+id/Title"

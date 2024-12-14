@@ -5,16 +5,16 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kana.smarthome.databinding.FragmentDevicesBinding
+import com.kana.smarthome.databinding.FragmentDevicesRoomBinding
 
-class DeviceFragmentRoom : Fragment(R.layout.fragment_devices) {
+class DeviceFragmentRoom : Fragment(R.layout.fragment_devices_room) {
 
-    private lateinit var binding: FragmentDevicesBinding
+    private lateinit var binding: FragmentDevicesRoomBinding
     private var room: Room? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentDevicesBinding.bind(view)
+        binding = FragmentDevicesRoomBinding.bind(view)
 
         room = arguments?.getParcelable("room")
 

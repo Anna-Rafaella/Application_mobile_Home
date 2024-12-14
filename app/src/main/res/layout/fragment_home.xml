@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/top_tight" />
+        app:srcCompat="@drawable/top_tight"/>
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -56,10 +56,10 @@
                     android:layout_height="74dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user_1" />
+                    app:srcCompat="@drawable/baseline_people_24" />
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/txtUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -73,10 +73,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Let's manage your smart home"
+                    android:text="Allez-y , controlez votre maison "
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView10"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                    app:layout_constraintStart_toStartOf="@+id/txtUserName"
+                    app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,43 +87,49 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp">
 
-                <ImageView
-                    android:id="@+id/imageView7"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardviewWeather"
                     android:layout_width="68dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:contentDescription="@null"
-                    android:visibility="visible"
+                    app:cardCornerRadius="32dp"
+                    app:cardElevation="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/meteo_icon" />
+                    app:layout_constraintTop_toTopOf="parent">
 
+                    <ImageView
+                        android:id="@+id/weatherIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@null"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/meteo_icon" />
+
+                </androidx.cardview.widget.CardView>
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/txtCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
                     android:text="TextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView7"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textStyle="normal|italic"
+                    app:layout_constraintEnd_toEndOf="@+id/txtWeather"
+                    app:layout_constraintStart_toStartOf="@+id/txtWeather"
+                    app:layout_constraintTop_toBottomOf="@+id/txtWeather" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/txtWeather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
                     android:text="TextView"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView12"
-                    app:layout_constraintStart_toStartOf="@+id/textView12"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardviewWeather"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,27 +170,37 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:id="@+id/ic_ampoule"
+                        <!-- CardView pour ImageView -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardviewAmpoule"
                             android:layout_width="68dp"
                             android:layout_height="66dp"
                             android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_ampoule" />
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/ic_ampoule"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@null"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/ic_ampoule" />
+                        </androidx.cardview.widget.CardView>
 
                         <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/home_switch_ampoule"
+                            android:id="@+id/switchAmpoule"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:minWidth="48dp"
                             android:minHeight="48dp"
                             android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@+id/ic_ampoule"
-                            app:layout_constraintStart_toStartOf="@+id/ic_ampoule"
-                            app:layout_constraintTop_toBottomOf="@+id/ic_ampoule" />
+                            app:layout_constraintEnd_toEndOf="@+id/cardviewAmpoule"
+                            app:layout_constraintStart_toStartOf="@+id/cardviewAmpoule"
+                            app:layout_constraintTop_toBottomOf="@+id/cardviewAmpoule" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,11 +223,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                <!-- Répétition pour Climatiseur -->
-
-                <!-- Répéter pour Garage -->
-
+                <!-- Bloc pour Garage -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -227,16 +239,26 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:id="@+id/ic_garage"
+                        <!-- CardView pour ImageView -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardviewGarage"
                             android:layout_width="68dp"
                             android:layout_height="66dp"
                             android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_garage" />
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/ic_garage"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@null"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/ic_garage" />
+                        </androidx.cardview.widget.CardView>
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switchGarage"
@@ -246,9 +268,9 @@
                             android:minWidth="48dp"
                             android:minHeight="48dp"
                             android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@id/ic_garage"
-                            app:layout_constraintStart_toStartOf="@id/ic_garage"
-                            app:layout_constraintTop_toBottomOf="@id/ic_garage" />
+                            app:layout_constraintEnd_toEndOf="@id/cardviewGarage"
+                            app:layout_constraintStart_toStartOf="@id/cardviewGarage"
+                            app:layout_constraintTop_toBottomOf="@id/cardviewGarage" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -269,10 +291,9 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- des blocs pour  Fenêtre -->
+                <!-- Répétition pour Fenêtre -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -288,16 +309,26 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
-                            android:id="@+id/ic_fenetre"
+                        <!-- CardView pour ImageView -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardviewFenetre"
                             android:layout_width="68dp"
                             android:layout_height="66dp"
                             android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_fenetre" />
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/ic_fenetre"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@null"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/ic_fenetre" />
+                        </androidx.cardview.widget.CardView>
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switchFenetre"
@@ -307,9 +338,9 @@
                             android:minWidth="48dp"
                             android:minHeight="48dp"
                             android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@id/ic_fenetre"
-                            app:layout_constraintStart_toStartOf="@id/ic_fenetre"
-                            app:layout_constraintTop_toBottomOf="@id/ic_fenetre" />
+                            app:layout_constraintEnd_toEndOf="@id/cardviewFenetre"
+                            app:layout_constraintStart_toStartOf="@id/cardviewFenetre"
+                            app:layout_constraintTop_toBottomOf="@id/cardviewFenetre" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -330,7 +361,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -467,6 +497,29 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/ivHelp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:src="@drawable/help"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,7 +41,7 @@ class HomeFragmentAdapter(
 
         val house = getItem(position) as HouseData
 
-                Log.d("Adapter", "Affichage de la maison : ${house.houseId}, Propriétaire: ${house.owner}")
+        Log.d("Adapter", "Affichage de la maison : ${house.houseId}, Propriétaire: ${house.owner}")
 
         // Initialiser les vues depuis le XML
         val radioButton = rowView.findViewById<RadioButton>(R.id.radioBtnSelect)
