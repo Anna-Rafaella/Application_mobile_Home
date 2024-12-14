@@ -109,11 +109,12 @@
                         app:srcCompat="@drawable/meteo_icon" />
 
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:id="@+id/txtCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="-------"
                     android:textStyle="normal|italic"
                     app:layout_constraintEnd_toEndOf="@+id/txtWeather"
                     app:layout_constraintStart_toStartOf="@+id/txtWeather"
@@ -124,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="TextView"
+                    android:text="----------"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

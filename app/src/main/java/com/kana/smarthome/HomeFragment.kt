@@ -139,20 +139,6 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
         return rootView
     }
 
-    private fun showInstructionDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Instructions")
-        builder.setMessage(
-            "Bienvenue sur l'accueil de votre application domotique. Vous pouvez entre autre :\n\n" +
-                    "- Agir sur l'ensemble des appareils de la maison en fonction des types au niveau de la rubrique Appareils fréquemment utilisés.\n" +
-                    "- Sélectionner la maison sur laquelle agir. Par défaut, le choix est celui ou vous etes le propriétaire.\n" +
-                    "- Si vous etes propriétaire de la maison sélectionnée , vous pouvez gérer les accès en accordant et en retirant ces droits aux differents utilisateurs. \n\n" +
-                    "A vous de jouer !! "
-
-        )
-        builder.setPositiveButton("Compris") { dialog, _ -> dialog.dismiss() }
-        builder.create().show()
-    }
 
     /**
      * Initialisation du launcher de permission.
@@ -217,7 +203,7 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
      * Récupère les informations météo depuis OpenWeatherMap.
      */
     private fun fetchWeather(lat: Double, lon: Double) {
-        val url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$WEATHER_API_KEY"
+        val url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&lang=fr&appid=$WEATHER_API_KEY"
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {
@@ -241,6 +227,9 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
     }
 
 
+    /**
+     * Actualise la page lors de la sélection d'une maison
+     */
     override fun onHouseSelected(houseId: Int) {
 
         if (this.houseId != houseId) {
@@ -254,6 +243,9 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
         }
     }
 
+    /**
+     * Initialiser les adapters.
+     */
     private fun setupAdapters(rootView: View) {
         // Configurer les adaptateurs
         houseAdapter = HomeFragmentAdapter(requireContext(), house,this)
@@ -283,6 +275,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
             }
         }
     }
+
+    /**
+     * Initialise l'ecoute sur les switchs.
+     */
     private fun initSwitches(rootView: View) {
         rootView.findViewById<SwitchCompat>(R.id.switchAmpoule)?.apply {
             setOnCheckedChangeListener { _, isChecked ->
@@ -304,6 +300,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
     }
 
 
+
+    /**
+     * Récupère la liste des maisons selon le token recuperé dans le sharePreference.
+     */
     private fun loadHouse() {
         token?.let {
             viewLifecycleOwner.lifecycleScope.launch {
@@ -319,6 +319,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
             }
         } ?: Log.e("HomeFragment", "Token introuvable pour charger les maisons.")
     }
+
+    /**
+     * Réponse du serveur sur  de la liste des maisons.
+     */
     private fun handleHouseResponse(responseCode: Int, loadedHouses: List<HouseData>?) {
         if (responseCode == 200 && loadedHouses != null) {
             house.clear()
@@ -333,6 +337,11 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
         }
     }
 
+
+
+    /**
+     * Récupère la liste des devices de la maison associée au token.
+     */
     private fun loadDevices() {
         houseId?.let {
             Api().get<DeviceResponse>(
@@ -342,6 +351,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
             )
         }
     }
+
+    /**
+     * Réponse du serveur sur la liste des devices de la maison associée.
+     */
     private fun handleDevicesResponse(responseCode: Int, responseBody: DeviceResponse?) {
         if (responseCode == 200 && responseBody != null) {
             devices.clear()
@@ -352,9 +365,16 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
     }
 
 
+    /**
+     * Récupère la liste des utilisateurs du serveur pour un choix ulterieur.
+     */
     private fun loadUsers() {
         Api().get("https://polyhome.lesmoulinsdudev.com/api/users", ::loadUsersSuccess)
     }
+
+    /**
+     * Réponse du serveur sur la liste des utilisateurs.
+     */
     private fun loadUsersSuccess(responseCode: Int, loadedUsers: List<UsersData>?) {
         if (responseCode == 200 && loadedUsers != null) {
             users.clear()
@@ -367,6 +387,9 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
     }
 
 
+    /**
+     * Récupère la liste des utilisateurs ayant l'accès a la maison du proprietaire.
+     */
     private fun loadUsersWithAccess() {
         token?.let {
             viewLifecycleOwner.lifecycleScope.launch {
@@ -382,6 +405,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
             }
         }
     }
+
+    /**
+     * Réponse du serveur sur la liste des utilisateurs aytant l'accès.
+     */
     private fun handleUsersWithAccessResponse(responseCode: Int, loadedUsers: List<UsersAccessData>?) {
         if (responseCode == 200 && loadedUsers != null) {
             usersAccess.clear()
@@ -407,6 +434,9 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
 
 
 
+    /**
+     * Envoie au serveur du choix de l'utilisateur selectionné pour lui donner accès a nla maison de l'utilisateur.
+     */
     private fun sendUsersChoice(rootView: View) {
         val spinUsers = rootView.findViewById<Spinner>(R.id.userchoice)
         val selectedUser = spinUsers?.selectedItem as? UsersData
@@ -426,6 +456,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
             securityToken = token.orEmpty()
         )
     }
+
+    /**
+     * Réponse du serveur apres l'envoie de l'utilisateur a qui on veut donner un accès.
+     */
     private fun userChoiceSuccess(responseCode: Int) {
         requireActivity().runOnUiThread {
             if (responseCode == 200) {
@@ -438,12 +472,18 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
     }
 
 
+    /**
+     * Envoie la commande au appareils en effectuant un parcours des devices  selon le type actionné.
+     */
     private fun sendGlobalCommandToAllDevices(deviceType: String, command: String) {
         devices.filter { it.id.startsWith(deviceType) }.forEach { device ->
             sendCommandToDevice(device.id, command)
         }
     }
 
+    /**
+     * Methode qui execute l'envoie de la commande a un appareil selon son type.
+     */
     private fun sendCommandToDevice(deviceId: String, command: String) {
         Api().post(
             "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",
@@ -455,10 +495,16 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
 
 
 
+    /**
+     * Sauvergarde le HouseID de la maison dans le sharePreferences.
+     */
     private fun saveHouseId(houseId: Int) {
         sharedPreferences.edit().putInt("MyHouseId", houseId).apply()
     }
 
+    /**
+     * Met a jour la liste des maisons recuperé du serveur.
+     */
     private fun updateHouseList() {
         requireActivity().runOnUiThread{
             houseAdapter.notifyDataSetChanged()
@@ -470,6 +516,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
 
     }
 
+
+    /**
+     * Met a jour la liste des utilisateurs recuperé du serveur.
+     */
     private fun updateUsersList() {
         requireActivity().runOnUiThread{
             usersAdapter.notifyDataSetChanged()
@@ -477,6 +527,10 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
 
     }
 
+
+    /**
+     * Met a jour la liste des utilisateurs ayant l'accès  recuperé du serveur.
+     */
     private fun updateUsersWithAccess() {
         requireActivity().runOnUiThread{
             usersAccessAdapter.notifyDataSetChanged()
@@ -490,7 +544,9 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
     }
 
 
-    //Gerer la hauteur des listview pour s'adapter au contenu
+    /**
+     * Gere la hauteur des listview pour s'adapter au contenu.
+     */
     private fun setListViewHeightBasedOnChildren(listView: ListView) {
         val listAdapter = listView.adapter ?: return
 
@@ -514,6 +570,26 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
         listView.layoutParams = params
         listView.requestLayout()
     }
+
+
+    /**
+     * Affiche les détails de la page en cours
+     */
+    private fun showInstructionDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Instructions")
+        builder.setMessage(
+            "Bienvenue sur l'accueil de votre application domotique. Vous pouvez entre autre :\n\n" +
+                    "- Agir sur l'ensemble des appareils de la maison en fonction des types au niveau de la rubrique Appareils fréquemment utilisés.\n" +
+                    "- Sélectionner la maison sur laquelle agir. Par défaut, le choix est celui ou vous etes le propriétaire.\n" +
+                    "- Si vous etes propriétaire de la maison sélectionnée , vous pouvez gérer les accès en accordant et en retirant ces droits aux differents utilisateurs. \n\n" +
+                    "A vous de jouer !! "
+
+        )
+        builder.setPositiveButton("Compris") { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
+    }
+
 
 }
 
