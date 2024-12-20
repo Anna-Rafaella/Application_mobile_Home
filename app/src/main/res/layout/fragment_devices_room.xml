@@ -15,9 +15,9 @@
         android:id="@+id/backbtn"
         android:layout_width="224dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="30dp"
+
         android:text="Retour a la liste des pièces" />
 
 

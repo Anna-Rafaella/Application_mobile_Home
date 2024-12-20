@@ -106,7 +106,7 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
         //recuperer et afficher le nom de l'utlisateur
         txtUserName = rootView.findViewById(R.id.txtUserName)
 
-        txtUserName.text = " Bienvenue $userName!! "
+        txtUserName.text = " Bienvenue $userName "
 
         //Gestion de la météo
         txtCity = rootView.findViewById(R.id.txtCity)
