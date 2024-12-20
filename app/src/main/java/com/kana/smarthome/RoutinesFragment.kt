@@ -17,25 +17,22 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import java.util.Calendar
-import android.widget.EditText
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
-
 
 class RoutinesFragment : Fragment() {
 
-    private var houseId: Int? = null // Identifiant de la maison sélectionnée
-    private var token: String? = null // Le token sera récupéré dans onCreateView
-    private val devices = ArrayList<DeviceData>() // Liste des appareils chargés
+    private var houseId: Int? = null
+    private var token: String? = null
+    private val devices = ArrayList<DeviceData>()
     private val house = ArrayList<HouseData>()
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var tvSelectedOpeningTime: TextView
     private lateinit var tvSelectedClosingTime: TextView
-    private var openingHour: Int = 0
+    private var openingHour: Int = 8
     private var openingMinute: Int = 0
-    private var closingHour: Int = 0
+    private var closingHour: Int = 20
     private var closingMinute: Int = 0
     private var isDayModeActive = false
     private var isNightModeActive = false
@@ -52,10 +49,15 @@ class RoutinesFragment : Fragment() {
         if (token.isNullOrEmpty()) {
             Log.e("HomeFragment", "Aucun token trouvé dans SharedPreferences.")
         }
+
         // Initialisation des vues
         tvSelectedOpeningTime = rootView.findViewById(R.id.tvSelectedOpeningTime)
         tvSelectedClosingTime = rootView.findViewById(R.id.tvSelectedClosingTime)
         val btnSaveSchedule = rootView.findViewById<Button>(R.id.btnSaveSchedule)
+
+        // Charger les données depuis SharedPreferences
+        loadScheduleFromPreferences()
+        loadSwitchStateFromPreferences()
 
         // Boutons pour choisir les heures
         rootView.findViewById<Button>(R.id.btnSelectOpeningTime).setOnClickListener {
@@ -63,13 +65,8 @@ class RoutinesFragment : Fragment() {
                 openingHour = hour
                 openingMinute = minute
                 tvSelectedOpeningTime.text = "Heure d'ouverture : ${formatTime(hour, minute)}"
-                Log.d("RoutinesFragment", "Heure d'ouverture définie : $openingHour:$openingMinute")
+                saveScheduleToPreferences(openingHour, openingMinute, closingHour, closingMinute)
             }
-        }
-
-        // Ajouter un écouteur sur l'icône d'aide
-        rootView.findViewById<ImageView>(R.id.ivHelp).setOnClickListener {
-            showInstructionDialog()
         }
 
         rootView.findViewById<Button>(R.id.btnSelectClosingTime).setOnClickListener {
@@ -77,8 +74,13 @@ class RoutinesFragment : Fragment() {
                 closingHour = hour
                 closingMinute = minute
                 tvSelectedClosingTime.text = "Heure de fermeture : ${formatTime(hour, minute)}"
-                Log.d("RoutinesFragment", "Heure de fermeture définie : $closingHour:$closingMinute")
+                saveScheduleToPreferences(openingHour, openingMinute, closingHour, closingMinute)
             }
+        }
+
+        // Ajouter un écouteur sur l'icône d'aide
+        rootView.findViewById<ImageView>(R.id.ivHelp).setOnClickListener {
+            showInstructionDialog()
         }
 
         // Switches pour activer/désactiver les modes
@@ -88,15 +90,10 @@ class RoutinesFragment : Fragment() {
         // Gestion des vérifications automatiques
         handler = Handler(Looper.getMainLooper())
         startModeCheck()
-        // Gestion de l'enregistrement des
-
-        loadHouse()
 
         btnSaveSchedule.setOnClickListener {
             val openingTime = tvSelectedOpeningTime.text.toString()
             val closingTime = tvSelectedClosingTime.text.toString()
-
-            // Enregistrer ou passer les données à une autre fonction
             saveSchedule(openingTime, closingTime)
         }
 
@@ -116,30 +113,23 @@ class RoutinesFragment : Fragment() {
         builder.create().show()
     }
 
-
     private fun setupDayModeSwitch(daySwitch: SwitchCompat) {
+        daySwitch.isChecked = isDayModeActive
         daySwitch.setOnCheckedChangeListener { _, isChecked ->
             isDayModeActive = isChecked
-            if (isChecked) {
-                Toast.makeText(requireContext(), "Mode Jour activé", Toast.LENGTH_SHORT).show()
-                Log.d("RoutinesFragment", "Mode Jour activé.")
-            } else {
-                Toast.makeText(requireContext(), "Mode Jour désactivé", Toast.LENGTH_SHORT).show()
-                Log.d("RoutinesFragment", "Mode Jour désactivé.")
-            }
+            saveSwitchStateToPreferences(isDayModeActive, isNightModeActive)
+            val message = if (isChecked) "Mode Jour activé" else "Mode Jour désactivé"
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun setupNightModeSwitch(nightSwitch: SwitchCompat) {
+        nightSwitch.isChecked = isNightModeActive
         nightSwitch.setOnCheckedChangeListener { _, isChecked ->
             isNightModeActive = isChecked
-            if (isChecked) {
-                Toast.makeText(requireContext(), "Mode Nuit activé", Toast.LENGTH_SHORT).show()
-                Log.d("RoutinesFragment", "Mode Nuit activé.")
-            } else {
-                Toast.makeText(requireContext(), "Mode Nuit désactivé", Toast.LENGTH_SHORT).show()
-                Log.d("RoutinesFragment", "Mode Nuit désactivé.")
-            }
+            saveSwitchStateToPreferences(isDayModeActive, isNightModeActive)
+            val message = if (isChecked) "Mode Nuit activé" else "Mode Nuit désactivé"
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -150,29 +140,20 @@ class RoutinesFragment : Fragment() {
                 val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
                 val currentMinute = calendar.get(Calendar.MINUTE)
 
-                Log.d(
-                    "RoutinesFragment",
-                    "Heure actuelle : $currentHour:$currentMinute. Mode Jour : $isDayModeActive, Mode Nuit : $isNightModeActive"
-                )
-
                 if (isDayModeActive && currentHour == openingHour && currentMinute == openingMinute) {
-                    Log.d("RoutinesFragment", "Correspondance avec l'heure d'ouverture détectée.")
                     activateDayMode()
                 }
 
                 if (isNightModeActive && currentHour == closingHour && currentMinute == closingMinute) {
-                    Log.d("RoutinesFragment", "Correspondance avec l'heure de fermeture détectée.")
                     activateNightMode()
                 }
 
-                // Vérification toutes les 60 secondes
-                handler.postDelayed(this, 10000)
+                handler.postDelayed(this, 60000) // Vérification toutes les 60 secondes
             }
         })
     }
 
     private fun activateDayMode() {
-        Log.d("RoutinesFragment", "Activation automatique du Mode Jour.")
         sendGlobalCommandToAllDevices("Light", "TURN OFF")
         sendGlobalCommandToAllDevices("GarageDoor", "OPEN")
         sendGlobalCommandToAllDevices("Shutter", "OPEN")
@@ -180,82 +161,42 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun activateNightMode() {
-        Log.d("RoutinesFragment", "Activation automatique du Mode Nuit.")
         sendGlobalCommandToAllDevices("Light", "TURN ON")
         sendGlobalCommandToAllDevices("GarageDoor", "CLOSE")
         sendGlobalCommandToAllDevices("Shutter", "CLOSE")
         Toast.makeText(requireContext(), "Mode Nuit exécuté automatiquement", Toast.LENGTH_SHORT).show()
     }
 
-
-    private fun loadHouse() {
-        token?.let {
-            viewLifecycleOwner.lifecycleScope.launch {
-                try {
-                    Api().get<List<HouseData>>(
-                        "https://polyhome.lesmoulinsdudev.com/api/houses",
-                        ::handleHouseResponse,
-                        it
-                    )
-                } catch (e: Exception) {
-                    Log.e("HomeFragment", "Erreur lors du chargement des maisons : ${e.message}")
-                }
-            }
-        } ?: Log.e("HomeFragment", "Token introuvable pour charger les maisons.")
-    }
-    private fun handleHouseResponse(responseCode: Int, loadedHouses: List<HouseData>?) {
-        if (responseCode == 200 && loadedHouses != null) {
-            house.clear()
-            house.addAll(loadedHouses)
-
-            if (houseId == null) {
-                houseId = loadedHouses.firstOrNull { it.owner }?.houseId
-                houseId?.let { saveHouseId(it) }
-            }
-
-            loadDevices()
-        } else {
-            Log.e("HomeFragment", "Erreur lors du chargement des maisons.")
+    private fun saveScheduleToPreferences(openingHour: Int, openingMinute: Int, closingHour: Int, closingMinute: Int) {
+        with(sharedPreferences.edit()) {
+            putInt("OpeningHour", openingHour)
+            putInt("OpeningMinute", openingMinute)
+            putInt("ClosingHour", closingHour)
+            putInt("ClosingMinute", closingMinute)
+            apply()
         }
     }
 
-    private fun saveHouseId(houseId: Int) {
-        sharedPreferences.edit().putInt("MyHouseId", houseId).apply()
+    private fun loadScheduleFromPreferences() {
+        openingHour = sharedPreferences.getInt("OpeningHour", 8)
+        openingMinute = sharedPreferences.getInt("OpeningMinute", 0)
+        closingHour = sharedPreferences.getInt("ClosingHour", 20)
+        closingMinute = sharedPreferences.getInt("ClosingMinute", 0)
+        tvSelectedOpeningTime.text = "Heure d'ouverture : ${formatTime(openingHour, openingMinute)}"
+        tvSelectedClosingTime.text = "Heure de fermeture : ${formatTime(closingHour, closingMinute)}"
     }
 
-    private fun loadDevices() {
-        houseId?.let {
-            Api().get<DeviceResponse>(
-                "https://polyhome.lesmoulinsdudev.com/api/houses/$it/devices",
-                ::handleDevicesResponse,
-                token.orEmpty()
-            )
+    private fun saveSwitchStateToPreferences(dayMode: Boolean, nightMode: Boolean) {
+        with(sharedPreferences.edit()) {
+            putBoolean("DayModeActive", dayMode)
+            putBoolean("NightModeActive", nightMode)
+            apply()
         }
     }
 
-    private fun handleDevicesResponse(responseCode: Int, responseBody: DeviceResponse?) {
-        if (responseCode == 200 && responseBody != null) {
-            devices.clear()
-            devices.addAll(responseBody.devices)
-        } else {
-            Log.e("HomeFragment", "Erreur lors du chargement des appareils.")
-        }
-    }
-
-    private fun sendGlobalCommandToAllDevices(deviceType: String, command: String) {
-        Log.d("RoutinesFragment", "Commande envoyée : $command pour $deviceType.")
-        // Simuler l'envoi des commandes
-        devices.filter { it.id.startsWith(deviceType) }.forEach { device ->
-            sendCommandToDevice(device.id, command)
-        }
-    }
-    private fun sendCommandToDevice(deviceId: String, command: String) {
-        Api().post(
-            "https://polyhome.lesmoulinsdudev.com/api/houses/$houseId/devices/$deviceId/command",
-            ResponseCommandData(command),
-            { response -> Log.d("HomeFragment", "Commande envoyée avec succès à $deviceId : $response") },
-            token.orEmpty()
-        )
+    private fun loadSwitchStateFromPreferences() {
+        isDayModeActive = sharedPreferences.getBoolean("DayModeActive", false)
+        isNightModeActive = sharedPreferences.getBoolean("NightModeActive", false)
     }
 
     private fun showTimePicker(onTimeSelected: (hour: Int, minute: Int) -> Unit) {
@@ -273,10 +214,19 @@ class RoutinesFragment : Fragment() {
     private fun formatTime(hour: Int, minute: Int): String {
         return String.format("%02d:%02d", hour, minute)
     }
-    // Simuler l'enregistrement des données
+
     private fun saveSchedule(openingTime: String, closingTime: String) {
-        // Vous pouvez transmettre ces données à une autre activité ou fonction
-        println("Horaires sauvegardés : Ouverture - $openingTime, Fermeture - $closingTime")
+        Log.d("RoutinesFragment", "Horaires sauvegardés : Ouverture - $openingTime, Fermeture - $closingTime")
     }
 
+    private fun sendGlobalCommandToAllDevices(deviceType: String, command: String) {
+        devices.filter { it.id.startsWith(deviceType) }.forEach { device ->
+            sendCommandToDevice(device.id, command)
+        }
+    }
+
+    private fun sendCommandToDevice(deviceId: String, command: String) {
+        // Simuler l'envoi de commande
+        Log.d("RoutinesFragment", "Commande $command envoyée à l'appareil $deviceId.")
+    }
 }
