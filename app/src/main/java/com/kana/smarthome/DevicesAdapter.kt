@@ -27,6 +27,8 @@ class DevicesAdapter(private val context: Context, private val dataSource: List<
         val rowView = convertView ?: inflater.inflate(R.layout.item_devices, parent, false)
         val device = getItem(position) as DeviceData
 
+
+
         val deviceName = rowView.findViewById<TextView>(R.id.device_name)
         val actionButton1 = rowView.findViewById<Button>(R.id.action_button_1)
         val actionButton2 = rowView.findViewById<Button>(R.id.action_button_2)

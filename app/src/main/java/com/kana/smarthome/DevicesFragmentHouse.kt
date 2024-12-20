@@ -1,30 +1,34 @@
 package com.kana.smarthome
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 
-class DevicesFragment : Fragment() {
+class DevicesFragmentHouse : Fragment() {
 
     private var devices = ArrayList<DeviceData>()
     private lateinit var devicesAdapter: DevicesAdapter
     private var token: String? = null
+    private var houseId: Int? = null
+    private lateinit var listViewDevices: ListView
+    private  lateinit var textErreurDeChargement: TextView
 
-    // Sections des appareils
-    private val rezDeChausseeDevices = ArrayList<DeviceData>()
-    private val niveauUnDevices = ArrayList<DeviceData>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_device, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_device_house, container, false)
 
         // Récupérer le token depuis SharedPreferences
         val sharedPreferences = requireActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
@@ -36,19 +40,44 @@ class DevicesFragment : Fragment() {
             Log.e("MyFragment", "Aucun token trouvé.")
         }
 
-        val listViewDevices = rootView.findViewById<ListView>(R.id.devices_list)
+        houseId = sharedPreferences.getInt("houseId",0)
+        if (houseId == 0) {
+            Log.e("HomeFragment", "Aucun identifiant de maison trouvé dans SharedPreferences.")
+        }
+        listViewDevices = rootView.findViewById(R.id.devices_list)
         devicesAdapter = DevicesAdapter(requireContext(), devices)
         listViewDevices.adapter = devicesAdapter
 
+        textErreurDeChargement = rootView.findViewById(R.id.textErreurDeChargement)
+
         loadDevices()
+
+        // Ajouter un écouteur sur l'icône d'aide
+        rootView.findViewById<ImageView>(R.id.ivHelp).setOnClickListener {
+            showInstructionDialog()
+        }
 
         return rootView
     }
 
 
+    private fun showInstructionDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Instructions")
+        builder.setMessage(
+            "Bienvenue sur la page Contenant l'ensemble des appareils de la maison.Vous pourriez effectuer differents actions selon le type d'appareils :\n\n" +
+                    "- Pour les Ampoules identifiées par light : Vous pourrez les ALLUMER et les ETEINDRE\n" +
+                    "- Pour les fenetres identifiées par shutter : Vous pourrez les OUVRIR, les FERMER et/ou STOPPER l'evolution d'une action\n" +
+                    "- Pour la porte de garage identifiées par garage door : Vous pourrez l' OUVRIR, la FERMER et/ou STOPPER l'evolution d'une action.\n\n" +
+                    "Si rien ne se charge sur la page, veuillez actualiser la maquette de la maison dans le navigateur  et recharger cette page.\n\n"+
+                    "A vous de jouer !! "
+        )
+        builder.setPositiveButton("Compris") { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
+    }
 
     private fun loadDevices() {
-        val houseId = 10
+
 
 
         if (token != null) {
@@ -75,7 +104,16 @@ class DevicesFragment : Fragment() {
 
             updateDevices()
             Log.d("DevicesFragment", "Devices chargés : ${responseBody.devices}")
-        } else {
+        }
+        else if(responseCode == 500) {
+            // Gérer l'affichage d'erreur dans le thread principal
+            activity?.runOnUiThread {
+                listViewDevices.visibility = View.GONE
+                textErreurDeChargement.visibility = View.VISIBLE
+                textErreurDeChargement.text = "OUVREZ LA MAQUETTE DE LA MAISON DANS UN NAVIGATEUR"
+            }
+             }
+        else{
             Log.e(
                 "DevicesFragment",
                 "Erreur lors du chargement des appareils: code $responseCode ou données nulles"
@@ -83,19 +121,7 @@ class DevicesFragment : Fragment() {
         }
     }
 
-    private fun categorizeDevices(devicesList: List<DeviceData>) {
-        // Séparer les appareils en fonction de leur ID
-        for (device in devicesList) {
-            when {
-                device.id.startsWith("Light 1") -> rezDeChausseeDevices.add(device)
-                device.id.startsWith("Shutter 1") -> rezDeChausseeDevices.add(device)
-                device.id.startsWith("GarageDoor 1") -> rezDeChausseeDevices.add(device)
-                device.id.startsWith("Light 2") -> niveauUnDevices.add(device)
-                device.id.startsWith("Shutter 2") -> niveauUnDevices.add(device)
-                else -> Log.d("DevicesFragment", "Appareil non catégorisé : ${device.id}")
-            }
-        }
-    }
+
 
     private fun updateDevices() {
         activity?.runOnUiThread {

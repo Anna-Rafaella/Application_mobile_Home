@@ -37,10 +37,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildToolsVersion = "35.0.0"
 }
-
-
 
 dependencies {
 
@@ -60,9 +57,16 @@ dependencies {
     implementation(libs.androidx.ui.test.android)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.ui.tooling.preview.android)
+
+    implementation(libs.play.services.location)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.google.code.gson:gson:2.11.0") // Ajout de la  dépendance vers la bibliothèque Gson qui se chargera de parser ou de transformer des
-    // données en JSON
+    implementation("com.google.code.gson:gson:2.10.1") // Ajout de la  dépendance vers la bibliothèque Gson qui se chargera de parser ou de transformer des
+    implementation ("com.airbnb.android:lottie:5.2.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+
 }

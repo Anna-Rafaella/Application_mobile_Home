@@ -9,7 +9,7 @@
         android:id="@+id/UsersWithAccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Nom des utilisateurs"
         android:textColor="@android:color/black"
@@ -22,12 +22,10 @@
         android:id="@+id/RemoveAccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Supprimer l'accès"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/UsersWithAccess"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/UsersWithAccess"
         app:layout_constraintTop_toTopOf="@+id/UsersWithAccess" />
 </androidx.constraintlayout.widget.ConstraintLayout>

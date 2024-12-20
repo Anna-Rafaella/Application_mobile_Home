@@ -22,8 +22,10 @@
 
     <LinearLayout
         android:id="@+id/LinearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="#88000000"
         android:orientation="vertical"
         android:padding="20dp"
@@ -32,10 +34,7 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/log_image"
-        tools:ignore="ExtraText"><![CDATA[
-        app:layout_constraintTop_toTopOf="@+id/log_image">
-
-        ]]>
+        tools:ignore="ExtraText">
 
         <TextView
             android:id="@+id/textView"

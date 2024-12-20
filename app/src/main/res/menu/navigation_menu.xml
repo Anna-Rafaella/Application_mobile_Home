@@ -2,18 +2,22 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/baseline_home_24"
-        android:title="Home" />
+        android:title="Accueil" />
     <item
         android:id="@+id/rooms"
         android:icon="@drawable/baseline_rooms_24"
-        android:title="Rooms" />
+        android:title="Pièces" />
     <item
         android:id="@+id/devices"
         android:icon="@drawable/baseline_devices_24"
-        android:title="Devices" />
+        android:title="Appareils" />
     <item
         android:id="@+id/routines"
         android:icon="@drawable/baseline_rut_24"
         android:title="Routines" />
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/baseline_logout_24"
+        android:title="Déconnexion" />
 
 </menu>

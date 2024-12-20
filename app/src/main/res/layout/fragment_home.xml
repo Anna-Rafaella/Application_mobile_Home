@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -10,483 +10,525 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/bottom_left" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/top_tight" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="vertical">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp">
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="61dp"
-                    android:layout_height="74dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/user_1" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Welcome, User!"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Let's manage your smart home"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView10"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp">
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="68dp"
-                    android:layout_height="66dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:contentDescription="@null"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/meteo_icon" />
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView7"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="TextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView12"
-                    app:layout_constraintStart_toStartOf="@+id/textView12"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12"
-                    app:layout_constraintVertical_bias="0.0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="Appareils Frequemment utilisés"
-                android:textStyle="bold" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="10dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
-
-                    <!-- Bloc pour Ampoule -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout_ampoule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/ic_ampoule"
-                            android:layout_width="68dp"
-                            android:layout_height="66dp"
-                            android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_ampoule" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/home_switch_ampoule"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@+id/ic_ampoule"
-                            app:layout_constraintStart_toStartOf="@+id/ic_ampoule"
-                            app:layout_constraintTop_toBottomOf="@+id/ic_ampoule" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/constraintLayout_ampoule"
-                        app:layout_constraintStart_toStartOf="@id/constraintLayout_ampoule"
-                        app:layout_constraintTop_toBottomOf="@id/constraintLayout_ampoule">
-
-                        <TextView
-                            android:id="@+id/text_ampoule"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Ampoule"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- Répétition des blocs pour Climatiseur, Garage et Fenêtre -->
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
-
-                    <!-- Bloc pour Climatiseur -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout_climatiseur"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/ic_light_climatiseur"
-                            android:layout_width="68dp"
-                            android:layout_height="66dp"
-                            android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_climatiseur" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/switch_climatiseur"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@+id/ic_light_climatiseur"
-                            app:layout_constraintStart_toStartOf="@+id/ic_light_climatiseur"
-                            app:layout_constraintTop_toBottomOf="@+id/ic_light_climatiseur" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/constraintLayout_climatiseur"
-                        app:layout_constraintStart_toStartOf="@id/constraintLayout_climatiseur"
-                        app:layout_constraintTop_toBottomOf="@id/constraintLayout_climatiseur">
-
-                        <TextView
-                            android:id="@+id/text_climatiseur"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Clim"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <!-- Répéter pour Garage et Fenêtre avec des IDs et des drawables spécifiques -->
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayoutGarage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/ic_garage"
-                            android:layout_width="68dp"
-                            android:layout_height="66dp"
-                            android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_garage" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/switchGarage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@id/ic_garage"
-                            app:layout_constraintStart_toStartOf="@id/ic_garage"
-                            app:layout_constraintTop_toBottomOf="@id/ic_garage" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/constraintLayoutGarage"
-                        app:layout_constraintStart_toStartOf="@id/constraintLayoutGarage"
-                        app:layout_constraintTop_toBottomOf="@id/constraintLayoutGarage">
-
-                        <TextView
-                            android:id="@+id/textViewGarage"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Garage"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="0.5">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayoutFenetre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/ic_fenetre"
-                            android:layout_width="68dp"
-                            android:layout_height="66dp"
-                            android:layout_marginTop="2dp"
-                            android:contentDescription="@null"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_fenetre" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/switchFenetre"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:minWidth="48dp"
-                            android:minHeight="48dp"
-                            android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="@id/ic_fenetre"
-                            app:layout_constraintStart_toStartOf="@id/ic_fenetre"
-                            app:layout_constraintTop_toBottomOf="@id/ic_fenetre" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/constraintLayoutFenetre"
-                        app:layout_constraintStart_toStartOf="@id/constraintLayoutFenetre"
-                        app:layout_constraintTop_toBottomOf="@id/constraintLayoutFenetre">
-
-                        <TextView
-                            android:id="@+id/textViewFenetre"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Fenêtre"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="Maisons"
-                android:textStyle="bold" />
+                android:baselineAligned="false"
+                android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp">
 
-                <ListView
-                    android:id="@+id/list_house"
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="61dp"
+                        android:layout_height="74dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/baseline_people_24" />
+
+                    <TextView
+                        android:id="@+id/txtUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Welcome, User!"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Allez-y , contrôlez votre maison !!"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/txtUserName"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_marginBottom="16dp"
-                    android:divider="@android:color/darker_gray"
-                    android:dividerHeight="1dp"
-                    android:scrollbars="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp">
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardviewWeather"
+                        android:layout_width="68dp"
+                        android:layout_height="66dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="32dp"
+                        app:cardElevation="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/accessuser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="Donner des accès"
-                android:textStyle="bold" />
+                        <ImageView
+                            android:id="@+id/weatherIcon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@null"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/meteo_icon" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/txtCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ville en cours de recherche "
+                        android:textStyle="normal|italic"
+                        app:layout_constraintEnd_toEndOf="@+id/txtWeather"
+                        app:layout_constraintStart_toStartOf="@+id/txtWeather"
+                        app:layout_constraintTop_toBottomOf="@+id/txtWeather" />
+
+                    <TextView
+                        android:id="@+id/txtWeather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Météo en cours de recherche "
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/cardviewWeather"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Appareils Frequemment utilisés"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0.75">
 
-                        <Spinner
-                            android:id="@+id/userchoice"
-                            android:layout_width="200dp"
+                        <!-- Bloc pour Ampoule -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout_ampoule"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/btnUsers"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <Button
-                            android:id="@+id/btnUsers"
+                            <!-- CardView pour ImageView -->
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardviewAmpoule"
+                                android:layout_width="68dp"
+                                android:layout_height="66dp"
+                                android:layout_marginTop="2dp"
+                                app:cardCornerRadius="16dp"
+                                app:cardElevation="4dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:id="@+id/ic_ampoule"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@null"
+                                    android:scaleType="centerCrop"
+                                    app:srcCompat="@drawable/ic_ampoule" />
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchAmpoule"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:padding="10dp"
+                                app:layout_constraintEnd_toEndOf="@+id/cardviewAmpoule"
+                                app:layout_constraintStart_toStartOf="@+id/cardviewAmpoule"
+                                app:layout_constraintTop_toBottomOf="@+id/cardviewAmpoule" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="Accorder"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/userchoice"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/constraintLayout_ampoule"
+                            app:layout_constraintStart_toStartOf="@id/constraintLayout_ampoule"
+                            app:layout_constraintTop_toBottomOf="@id/constraintLayout_ampoule">
 
+                            <TextView
+                                android:id="@+id/text_ampoule"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Ampoule"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Bloc pour Garage -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0.75">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutGarage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <!-- CardView pour ImageView -->
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardviewGarage"
+                                android:layout_width="68dp"
+                                android:layout_height="66dp"
+                                android:layout_marginTop="2dp"
+                                app:cardCornerRadius="16dp"
+                                app:cardElevation="4dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:id="@+id/ic_garage"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@null"
+                                    android:scaleType="centerCrop"
+                                    app:srcCompat="@drawable/ic_garage" />
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchGarage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:padding="10dp"
+                                app:layout_constraintEnd_toEndOf="@id/cardviewGarage"
+                                app:layout_constraintStart_toStartOf="@id/cardviewGarage"
+                                app:layout_constraintTop_toBottomOf="@id/cardviewGarage" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/constraintLayoutGarage"
+                            app:layout_constraintStart_toStartOf="@id/constraintLayoutGarage"
+                            app:layout_constraintTop_toBottomOf="@id/constraintLayoutGarage">
+
+                            <TextView
+                                android:id="@+id/textViewGarage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Garage"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Répétition pour Fenêtre -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0.75">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayoutFenetre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <!-- CardView pour ImageView -->
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardviewFenetre"
+                                android:layout_width="68dp"
+                                android:layout_height="66dp"
+                                android:layout_marginTop="2dp"
+                                app:cardCornerRadius="16dp"
+                                app:cardElevation="4dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:id="@+id/ic_fenetre"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@null"
+                                    android:scaleType="centerCrop"
+                                    app:srcCompat="@drawable/ic_fenetre" />
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/switchFenetre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:minWidth="48dp"
+                                android:minHeight="48dp"
+                                android:padding="10dp"
+                                app:layout_constraintEnd_toEndOf="@id/cardviewFenetre"
+                                app:layout_constraintStart_toStartOf="@id/cardviewFenetre"
+                                app:layout_constraintTop_toBottomOf="@id/cardviewFenetre" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/constraintLayoutFenetre"
+                            app:layout_constraintStart_toStartOf="@id/constraintLayoutFenetre"
+                            app:layout_constraintTop_toBottomOf="@id/constraintLayoutFenetre">
+
+                            <TextView
+                                android:id="@+id/textViewFenetre"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Fenêtre"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-                <ListView
-                    android:id="@+id/users_list_access"
+                <TextView
+                    android:id="@+id/textView19"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:divider="@android:color/darker_gray"
-                    android:dividerHeight="1dp"
-                    android:scrollbars="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Maisons"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ListView
+                        android:id="@+id/list_house"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:divider="@android:color/darker_gray"
+                        android:dividerHeight="1dp"
+                        android:scrollbars="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/Accessblock"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/accessuser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Gérer les accès"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/accessuser">
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <Spinner
+                                    android:id="@+id/userchoice"
+                                    android:layout_width="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:background="@color/white"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <Button
+                                    android:id="@+id/btnUsers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:text="Accorder"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+                        <ListView
+                            android:id="@+id/users_list_access"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="16dp"
+                            android:divider="@android:color/darker_gray"
+                            android:dividerHeight="1dp"
+                            android:scrollbars="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView2">
+
+            <ImageView
+                android:id="@+id/ivHelp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="16dp"
+                android:clickable="true"
+                android:contentDescription="@null"
+                android:focusable="true"
+                android:src="@drawable/help"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,165 +4,183 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bottom_nav_icon_color">
+    >
 
     <!-- Titre -->
-    <TextView
-        android:id="@+id/tvHeaderRoutines"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Liste des routines"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!-- Liste des routines -->
-
-    <!-- Bouton pour ajouter une routine -->
-
-    <TextView
-        android:id="@+id/Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:text="Planification de scénarios automatisés"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeaderRoutines" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="352dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="38dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Title">
-
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/sun" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/day_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Mode Jour" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="352dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/nuit" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/night_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Mode Nuit " />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="352dp"
-        android:layout_height="300sp"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-
-        <!-- Sélection de l'heure d'ouverture -->
-        <TextView
-            android:id="@+id/tvOpeningTimeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Heure d'ouverture"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btnSelectOpeningTime"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sélectionner l'heure d'ouverture" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvSelectedOpeningTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="Heure sélectionnée : Non définie"
-            android:textSize="14sp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <!-- Sélection de l'heure de fermeture -->
-        <TextView
-            android:id="@+id/tvClosingTimeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Heure de fermeture"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvHeaderRoutines"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Liste des routines"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnSelectClosingTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sélectionner l'heure de fermeture" />
+                <!-- Liste des routines -->
 
-        <TextView
-            android:id="@+id/tvSelectedClosingTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="Heure sélectionnée : Non définie"
-            android:textSize="14sp" />
+                <!-- Bouton pour ajouter une routine -->
 
-        <!-- Bouton pour sauvegarder -->
-        <Button
-            android:id="@+id/btnSaveSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary"
-            android:text="Enregistrer les horaires"
-            android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:text="Planification de scénarios automatisés"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvHeaderRoutines" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="352dp"
+                    android:layout_height="59dp"
+                    android:layout_marginTop="38dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/Title">
 
 
-    </LinearLayout>
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/sun" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Mode Jour" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="352dp"
+                    android:layout_height="59dp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/nuit" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/night_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Mode Nuit " />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="352dp"
+                    android:layout_height="300sp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.492"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+
+                    <!-- Sélection de l'heure d'ouverture -->
+                    <TextView
+                        android:id="@+id/tvOpeningTimeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Heure d'ouverture"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/btnSelectOpeningTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sélectionner l'heure d'ouverture" />
+
+                    <TextView
+                        android:id="@+id/tvSelectedOpeningTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Heure sélectionnée : Non définie"
+                        android:textSize="14sp" />
+
+                    <!-- Sélection de l'heure de fermeture -->
+                    <TextView
+                        android:id="@+id/tvClosingTimeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Heure de fermeture"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/btnSelectClosingTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sélectionner l'heure de fermeture" />
+
+                    <TextView
+                        android:id="@+id/tvSelectedClosingTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Heure sélectionnée : Non définie"
+                        android:textSize="14sp" />
+
+                    <!-- Bouton pour sauvegarder -->
+                    <Button
+                        android:id="@+id/btnSaveSchedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primary"
+                        android:text="Enregistrer les horaires"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/ivHelp"

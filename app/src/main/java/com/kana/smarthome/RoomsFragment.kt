@@ -1,7 +1,10 @@
 package com.kana.smarthome
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kana.smarthome.databinding.FragmentRoomsBinding
@@ -82,7 +85,7 @@ class RoomsFragment : Fragment(R.layout.fragment_rooms) {
                 putParcelable("room", room)
             }
 
-            // Appel la méthode replaceFragment de l'activité parent
+            // Appel de la méthode replaceFragment de l'activité parent
             (requireActivity() as? Home)?.replaceFragment(DeviceFragmentRoom().apply {
                 arguments = bundle
             })
@@ -91,6 +94,24 @@ class RoomsFragment : Fragment(R.layout.fragment_rooms) {
         binding.recyclerViewRooms.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewRooms.adapter = adapter
 
+        // Ajouter un écouteur sur l'icône d'aide
+        binding.ivHelp.setOnClickListener {
+            showInstructionDialog()
+        }
 
     }
+    private fun showInstructionDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Instructions")
+        builder.setMessage(
+            "Bienvenue sur la page des Pieces de la maison.\n\n" +
+                    "En cliquant sur une pièce, vous trouverez l'ensemble des appareils contenus dans cette pièce que vous pourrez controlez.\n" +
+                    "Allez-y, lancez-vous \n\n"+
+                    "A vous de jouer !! "
+        )
+        builder.setPositiveButton("Compris") { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
+    }
+
 }
+
