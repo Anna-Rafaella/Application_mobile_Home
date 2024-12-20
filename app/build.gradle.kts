@@ -65,5 +65,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.google.code.gson:gson:2.10.1") // Ajout de la  dépendance vers la bibliothèque Gson qui se chargera de parser ou de transformer des
     implementation ("com.airbnb.android:lottie:5.2.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
 
 }

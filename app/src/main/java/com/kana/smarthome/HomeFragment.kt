@@ -64,8 +64,8 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
 
     companion object {
         private const val TAG = "HomeFragment"
-        private const val WEATHER_API_KEY = "a9d4e10d9a830bda95a30ad73d90474b" // Votre clé OpenWeatherMap
-
+        private const val WEATHER_API_KEY = "a9d4e10d9a830bda95a30ad73d90474b" // clé OpenWeatherMap
+        private const val OPENCAGE_API_KEY = "b6078c69f9df419092a038c5ddc5a32e"              //clé OpenCage
     }
 
 
@@ -140,6 +140,91 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
     }
 
 
+    /**
+     * Récupère la localisation et la météo.
+     */
+    private fun fetchLocationAndWeather() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            Toast.makeText(requireContext(), "Permission manquante.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                lifecycleScope.launch {
+                    val cityName = fetchCityNameWithOpenCage(location.latitude, location.longitude)
+                    Log.d(TAG, "ville : $cityName")
+                    txtCity.text = cityName
+                    fetchWeather(location.latitude, location.longitude)
+                }
+            } else {
+                Toast.makeText(requireContext(), "Localisation introuvable.", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Erreur lors de la localisation.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * Utilise OpenCage API pour récupérer le nom de la ville.
+     */
+    private suspend fun fetchCityNameWithOpenCage(lat: Double, lon: Double): String {
+        return withContext(Dispatchers.IO) {
+            try {
+                val url = "https://api.opencagedata.com/geocode/v1/json?q=$lat+$lon&key=$OPENCAGE_API_KEY&language=fr"
+                val response = URL(url).readText()
+                val jsonObject = JSONObject(response)
+
+                val results = jsonObject.getJSONArray("results")
+
+                if (results.length() > 0) {
+                    val components = results.getJSONObject(0).getJSONObject("components")
+                    Log.d(TAG, "Results ville : $components")
+                    components.optString("city")
+                        ?: components.optString("town")
+                        ?: components.optString("village")
+                        ?: components.optString("state")
+                        ?: "Ville inconnue"
+                } else {
+                    "Ville inconnue"
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Erreur lors de l'utilisation d'OpenCage : ${e.message}")
+                "Ville inconnue"
+            }
+        }
+    }
+
+    /**
+     * Récupère les informations météo depuis OpenWeatherMap.
+     */
+    private fun fetchWeather(lat: Double, lon: Double) {
+        val url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&lang=fr&appid=$WEATHER_API_KEY"
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = URL(url).readText()
+                val jsonObject = JSONObject(response)
+
+                val weatherDescription = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description")
+                val temperature = jsonObject.getJSONObject("main").getDouble("temp")
+
+                Log.d(TAG, "Météo : $weatherDescription, Température : $temperature°C")
+                withContext(Dispatchers.Main) {
+                    txtWeather.text = "$weatherDescription, $temperature°C"
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Erreur météo : ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Erreur météo.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+/*
     /**
      * Initialisation du launcher de permission.
      */
@@ -225,7 +310,7 @@ class HomeFragment : Fragment(), HomeFragmentAdapter.OnHouseSelectedListener {
             }
         }
     }
-
+*/
 
     /**
      * Actualise la page lors de la sélection d'une maison
